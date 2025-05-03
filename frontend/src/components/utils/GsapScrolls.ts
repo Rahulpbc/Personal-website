@@ -60,9 +60,14 @@ export function setCharTimeline(
       screenLight = object;
     }
   });
+  // Get neck bone with null check
   let neckBone = character?.getObjectByName("spine005");
+  
+  // Only proceed with animations if we're on a desktop device
   if (window.innerWidth > 1024) {
+    // Only proceed if character exists
     if (character) {
+      // First timeline animation
       tl1
         .fromTo(character.rotation, { y: 0 }, { y: 0.7, duration: 1 }, 0)
         .to(camera.position, { z: 22 }, 0)
@@ -71,7 +76,8 @@ export function setCharTimeline(
         .to(".landing-container", { y: "40%", duration: 0.8 }, 0)
         .fromTo(".about-me", { y: "-50%" }, { y: "0%" }, 0);
 
-      tl2
+      // Second timeline with safe object access
+      const tl2Setup = tl2
         .to(
           camera.position,
           { z: 75, y: 8.4, duration: 6, delay: 2, ease: "power3.inOut" },
@@ -85,17 +91,34 @@ export function setCharTimeline(
           { pointerEvents: "none", x: "-12%", delay: 2, duration: 5 },
           0
         )
-        .to(character.rotation, { y: 0.92, x: 0.12, delay: 3, duration: 3 }, 0)
-        .to(neckBone!.rotation, { x: 0.6, delay: 2, duration: 3 }, 0)
-        .to(monitor.material, { opacity: 1, duration: 0.8, delay: 3.2 }, 0)
-        .to(screenLight.material, { opacity: 1, duration: 0.8, delay: 4.5 }, 0)
-        .fromTo(
-          ".what-box-in",
-          { display: "none" },
-          { display: "flex", duration: 0.1, delay: 6 },
-          0
-        )
-        .fromTo(
+        .to(character.rotation, { y: 0.92, x: 0.12, delay: 3, duration: 3 }, 0);
+      
+      // Only animate neck bone if it exists and has rotation property
+      if (neckBone && neckBone.rotation) {
+        tl2Setup.to(neckBone.rotation, { x: 0.6, delay: 2, duration: 3 }, 0);
+      }
+      
+      // Only animate monitor material if it exists
+      if (monitor && monitor.material) {
+        tl2Setup.to(monitor.material, { opacity: 1, duration: 0.8, delay: 3.2 }, 0);
+      }
+      
+      // Only animate screen light if it exists
+      if (screenLight && screenLight.material) {
+        tl2Setup.to(screenLight.material, { opacity: 1, duration: 0.8, delay: 4.5 }, 0);
+      }
+      
+      // Continue with DOM animations
+      tl2Setup.fromTo(
+        ".what-box-in",
+        { display: "none" },
+        { display: "flex", duration: 0.1, delay: 6 },
+        0
+      );
+      
+      // Only animate monitor position if it exists
+      if (monitor && monitor.position) {
+        tl2Setup.fromTo(
           monitor.position,
           { y: -10, z: 2 },
           { y: 0, z: 0, delay: 1.5, duration: 3 },
@@ -107,6 +130,7 @@ export function setCharTimeline(
           { opacity: 0, scale: 0, y: "-70%", duration: 5, delay: 2 },
           0.3
         );
+      }
 
       tl3
         .fromTo(
@@ -132,6 +156,7 @@ export function setCharTimeline(
   }
 }
 
+// Export the timeline setup function
 export function setAllTimeline() {
   const careerTimeline = gsap.timeline({
     scrollTrigger: {

@@ -33,8 +33,26 @@ const setCharacter = (
             resolve(gltf);
             setCharTimeline(character, camera);
             setAllTimeline();
-            character!.getObjectByName("footR")!.position.y = 3.36;
-            character!.getObjectByName("footL")!.position.y = 3.36;
+            // Safely access foot objects with null checks
+            try {
+              const footR = character.getObjectByName("footR");
+              const footL = character.getObjectByName("footL");
+              
+              if (footR && footR.position) {
+                footR.position.y = 3.36;
+              } else {
+                console.log("footR object not found in model, skipping position adjustment");
+              }
+              
+              if (footL && footL.position) {
+                footL.position.y = 3.36;
+              } else {
+                console.log("footL object not found in model, skipping position adjustment");
+              }
+            } catch (error) {
+              console.error("Error adjusting foot positions:", error);
+              // Continue loading even if foot adjustment fails
+            }
             dracoLoader.dispose();
           },
           undefined,
