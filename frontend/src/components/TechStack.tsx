@@ -54,6 +54,9 @@ const textures = imageUrls.map((url) => {
   return texture;
 });
 
+// Create a box geometry with rounded edges for better logo display
+const boxGeometry = new THREE.BoxGeometry(1.8, 1.8, 1.8, 4, 4, 4);
+// Keep a sphere geometry for the base shape
 const sphereGeometry = new THREE.SphereGeometry(1, 28, 28);
 
 const spheres = [...Array(30)].map(() => ({
@@ -64,7 +67,7 @@ type SphereProps = {
   vec?: THREE.Vector3;
   scale: number;
   r?: typeof THREE.MathUtils.randFloatSpread;
-  material: THREE.MeshPhysicalMaterial;
+  material: [THREE.MeshPhysicalMaterial, THREE.MeshPhysicalMaterial]; // Array of two materials
   isActive: boolean;
 };
 
@@ -72,7 +75,7 @@ function SphereGeo({
   vec = new THREE.Vector3(),
   scale,
   r = THREE.MathUtils.randFloatSpread,
-  material,
+  material, // This will now be an array of materials
   isActive,
 }: SphereProps) {
   const api = useRef<RapierRigidBody | null>(null);
@@ -109,12 +112,21 @@ function SphereGeo({
         position={[0, 0, 1.2 * scale]}
         args={[0.15 * scale, 0.275 * scale]}
       />
+      {/* Create two meshes - one sphere with base material and one box with logo */}
+      <mesh
+        castShadow
+        receiveShadow
+        scale={scale * 0.95} // Slightly smaller than the logo box
+        geometry={sphereGeometry}
+        material={material[0]} // Base white material
+        rotation={[0.3, 1, 1]}
+      />
       <mesh
         castShadow
         receiveShadow
         scale={scale}
-        geometry={sphereGeometry}
-        material={material}
+        geometry={boxGeometry}
+        material={material[1]} // Logo material
         rotation={[0.3, 1, 1]}
       />
     </RigidBody>
@@ -199,21 +211,36 @@ const TechStack = () => {
     };
   }, []);
   const materials = useMemo(() => {
-    return textures.map(
-      (texture) =>
-        new THREE.MeshPhysicalMaterial({
-          map: texture,
-          emissive: "#ffffff",
-          emissiveMap: texture,
-          emissiveIntensity: 0.6, // Increased for better visibility
-          metalness: 0.7,
-          roughness: 0.3, // Reduced for better reflection
-          clearcoat: 0.5, // Increased for better shine
-          transparent: true,
-          opacity: 1.0,
-          side: THREE.DoubleSide, // Render both sides
-        })
-    );
+    // Create a base white material for the spheres
+    const baseMaterial = new THREE.MeshPhysicalMaterial({
+      color: '#ffffff',
+      emissive: '#f0f0f0',
+      emissiveIntensity: 0.2,
+      metalness: 0.3,
+      roughness: 0.4,
+      clearcoat: 0.8,
+      clearcoatRoughness: 0.2
+    });
+    
+    // Create materials with logos for the flat sides
+    return textures.map((texture) => {
+      // Create a multi-material array with the base material and logo material
+      const logoMaterial = new THREE.MeshPhysicalMaterial({
+        map: texture,
+        emissive: '#ffffff',
+        emissiveMap: texture,
+        emissiveIntensity: 0.7,
+        metalness: 0.4,
+        roughness: 0.3,
+        clearcoat: 0.6,
+        transparent: true,
+        opacity: 1.0,
+        side: THREE.DoubleSide
+      });
+      
+      // Return an array with the base material for most faces and logo material for specific faces
+      return [baseMaterial, logoMaterial];
+    });
   }, []);
 
   return (
@@ -227,25 +254,26 @@ const TechStack = () => {
         onCreated={(state) => (state.gl.toneMappingExposure = 1.5)}
         className="tech-canvas"
       >
-        <ambientLight intensity={1.5} /> {/* Increased intensity */}
+        <ambientLight intensity={2.0} /> {/* Further increased ambient light */}
         <spotLight
           position={[20, 20, 25]}
           penumbra={1}
-          angle={0.3} /* Wider angle */
+          angle={0.4} /* Wider angle for better coverage */
           color="white"
-          intensity={1.5} /* Added intensity */
+          intensity={2.0} /* Increased intensity */
           castShadow
-          shadow-mapSize={[1024, 1024]} /* Increased shadow map size */
+          shadow-mapSize={[1024, 1024]}
         />
-        <directionalLight position={[0, 5, -4]} intensity={2.5} /> {/* Increased intensity */}
-        <pointLight position={[-10, 0, -20]} intensity={1.5} color="#ffffff" /> {/* Added point light */}
+        <directionalLight position={[0, 5, -4]} intensity={3.0} /> {/* Increased intensity */}
+        <pointLight position={[-10, 0, -20]} intensity={2.0} color="#ffffff" /> {/* Increased intensity */}
+        <pointLight position={[10, 10, 10]} intensity={1.5} color="#f0f0ff" /> {/* Additional light */}
         <Physics gravity={[0, 0, 0]}>
           <Pointer isActive={isActive} />
           {spheres.map((props, i) => (
             <SphereGeo
               key={i}
               {...props}
-              material={materials[Math.floor(Math.random() * materials.length)]}
+              material={materials[Math.floor(Math.random() * materials.length)] as [THREE.MeshPhysicalMaterial, THREE.MeshPhysicalMaterial]}
               isActive={isActive}
             />
           ))}
