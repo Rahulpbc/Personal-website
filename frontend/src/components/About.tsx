@@ -6,11 +6,9 @@ const About = () => {
       <div className="about-me">
         <h3 className="title">About Me</h3>
         <p className="para">
-          Hi, I'm Rahul Choudhary, a backend-focused software engineer with over 4 years of experience designing and scaling distributed systems in cloud-native environments. I specialize in building high-performance, resilient backend infrastructure using technologies like Java, Python, Kafka, Kubernetes, and AWS/GCP.
-
-          I’ve led projects across real-time data pipelines, fraud detection systems, and cloud microservices—working at the intersection of infrastructure, reliability, and developer experience. I enjoy solving complex systems challenges and collaborating with cross-functional teams to deliver scalable, impactful products.
-
-          Currently, I'm focused on building infrastructure that powers AI-driven applications and high-throughput platforms.
+          Hi, I'm Rahul Choudhary, a creative full stack developer with 4+ years of experience crafting engaging digital experiences. I blend technical expertise with creative problem-solving to build responsive, interactive web applications.
+          
+          I work across the entire development stack—from intuitive UIs with React and Three.js to scalable backend systems. My passion lies in creating seamless user experiences through clean code, thoughtful animations, and performance-optimized applications.
         </p>
       </div>
     </div>
