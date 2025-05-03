@@ -6,6 +6,7 @@ import Cursor from "./Cursor";
 import Landing from "./Landing";
 import Navbar from "./Navbar";
 import SocialIcons from "./SocialIcons";
+import TechStackFallback from "./TechStackFallback";
 import setSplitText from "./utils/splitText";
 
 const TechStack = lazy(() => import("./TechStack"));
@@ -40,10 +41,11 @@ const MainContainer = ({ children }: PropsWithChildren) => {
             <About />
             <Career />
             {isDesktopView && (
-              <Suspense fallback={<div>Loading....</div>}>
+              <Suspense fallback={<TechStackFallback />}>
                 <TechStack />
               </Suspense>
             )}
+            {!isDesktopView && <TechStackFallback />}
             <Contact />
           </div>
         </div>

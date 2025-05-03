@@ -1,693 +1,178 @@
 <!DOCTYPE html>
-
 <html lang="en">
-  <head>
-    <title>Page not found</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="/images/favicon.png" />
-    <script data-cfasync="false" src="/js/theme.js"></script>
-    <link rel="stylesheet" href="/css/variables.css?_=1746143768">
-    <link rel="stylesheet" href="/css/themes/dark-theme.css?_=1746143768">
-    <link rel="stylesheet" href="/css/style.css?_=1746143768">
-    <link rel="stylesheet" href="/css/sintax.css?_=1746143768">
+<head>
+	<meta charset="utf-8">
+	<title>404 - Page Not Found - Vector Logo Zone</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!--<link href="/css/bootstrap.css" rel="stylesheet" type="text/css" />-->
+	<link rel="stylesheet" href="/css/bootstrap.min.css" />
+	<link href="/css/fontawesome-all.min.css" rel="stylesheet" type="text/css" />
+	<meta name="theme-color" content="#2c3e50" />
+	<meta name="robots" content="noindex" />
+	<noscript>
+		<style>
+			.scriptonly {
+				display: none !important;
+			}
+		</style>
+	</noscript>
+	<style>
 
-    <link rel="stylesheet" href="/css/font-awesome.min.css">
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;amp;subset=latin,latin-ext">
-    <link rel="stylesheet" href="/css/langs/en.css">
+	/* faded border around logos in lists */
+	.logo-container img {
+		box-shadow: 0 0 5px #1d1d1d;
+		border: solid #ccc 1px;
+		margin: 6px;
+	}
 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="description" content="We couldn’t find the page you’re looking for.">
-    <meta property="og:url" content="https://expressjs.com/404.html">
-    
-    
-    <meta property="og:type" content="website" >
-    
-    
-    <meta name="title" property="og:title" content="Page not found">
-    <meta property="og:description" content="We couldn’t find the page you’re looking for.">
-    
-    <meta property="og:image" content="https://expressjs.com/images/og.png" >    
-    
-    <meta name="twitter:card" content="summary_large_image">
-    <meta property="twitter:domain" content="expressjs.com">
-    <meta property="twitter:url" content="https://expressjs.com/404.html">
-    <meta name="twitter:title" content="Page not found">
-    <meta name="twitter:description" content="We couldn’t find the page you’re looking for.">
-    
-    <meta property="twitter:image" content="https://expressjs.com/images/og.png" >    
-    
+	.card-footer {
+		background-color: inherit;
+		border-top: 0;
+	}
 
-    <script data-cfasync="false" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script data-cfasync="false" src="/js/app.js"></script>
-    <script data-cfasync="false" defer src="/js/menu.js"></script>
-    <script data-cfasync="false" defer src="/js/copycode.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+	.navbar-brand {
+		font-weight: bold;
+	}
 
-    <link rel="alternate" type="application/atom+xml" href="/feed.xml" title="Express Blog" />
-    <link rel="alternate" type="application/atom+xml" href="/vulnerabilities.xml" title="Express Vulnerabilities" />
+	.nav-link {
+		font-weight: bold;
+	}
+	.navbar-dark .navbar-nav .nav-link {
+		color: white;
+	}
+
+	.navbar-logo { height:31px;margin-top:-8px;padding-top:8px;padding-right:8px; }
+
+	h1 {
+		margin-top: 21px;
+	}
+
+	/* optional padding on visual inventory */
+	.padded { padding: 5px; }
+	.maxsize { max-width: 120px; max-height: 120px; }
+	.ar21 { height: 60px; width: 120px; }
+
+	/* hide outline on a clicked tab */
+	.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+		outline: 0;
+	}
+
+	/* external nav links on logo pages */
+	.icon-link {
+	color: #888;
+	margin-top: 10px;
+	margin-right: 5px;
+	padding: 8px;
+	}
+
+	/* shareing buttons on logo pages */
+	.sharelogo {
+		margin: 6px;
+		width: 32px;
+	}
+
+	/* search buttons */
+	.searchlogo {
+		margin: 6px;
+		width: 32px;
+	}
+
+	/* seems like a Bootstrap bug (or incompatibility with FontAwesome) */
+	.carousel-control { padding-top: 25%; }
+
+	/* bootswatch ugliness */
+	.alert-info a { color: white; text-decoration: underline; }
+
+	/* share buttons need plain backgrounds */
+	.btn-share {
+	background-color: #fff;
+	border-color: #ccc;
+	border-width: 1px;
+	padding: 4px 4px 0 4px;
+	margin-left: 5px;
+	}
+	.preview-color {
+		height: 30px;
+		width: 45px;
+		display: inline-block;
+		border: 1px solid #a2a2a2;
+		border-radius: 4px;
+		vertical-align: middle;
+		margin-left: 10px;
+	}
+
+	.social-footer {
+		margin-left: 8px;
+		margin-right: 8px;
+		vertical-align:middle;
+		width:20px;
+	}
+	.copy2tip { display: none; }
+
+	a {
+		/* WAVE doesn't like bootstrap default #007bff */
+		color: #003bbf;
+	}
+
+
+	</style>
+	<script src="/js/jquery-3.3.1.min.js"></script>
+	<script src="/js/popper.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script><meta name="referrer" content="unsafe-url" />
+
+
 </head>
-
-
-  
-  <body class="en-doc">
-  
-    <header>
-  <div id="mobile-menu">
-    <div id="nav-button" class="fa fa-bars fa-2x button"></div>
-  </div>
-  <div class="logo-container">
-    <a href="/" title="Go to homepage" aria-label="Go to homepage">
-      <svg xmlns="http://www.w3.org/2000/svg" class="express-logo" viewBox="0 0 1120.322 250" width="90" height="30">
-  <path d="M347.47162 250V4.890464h13.29516v38.55596a50.415241 50.415241 0 0 0 4.33954-5.43506c11.10412-23.03785 34.52487-37.57744 60.09412-37.29026 30.31296-.90408 54.94623 10.31704 69.422 37.29026a119.86915 119.86915 0 0 1 2.89302 109.881816c-13.4866 30.22788-46.79895 45.25672-82.46189 39.73657a66.688515 66.688515 0 0 1-53.22317-35.12049v97.4801zm13.29516-158.403836 2.97812 28.781356c5.25425 32.75927 24.62263 52.11702 55.03132 55.75458a62.540425 62.540425 0 0 0 68.69874-39.73657c11.82737-28.18574 10.95521-60.094116-2.33995-87.620406a61.26409 61.26409 0 0 0-64.54001-35.66294 59.668671 59.668671 0 0 0-53.30827 44.07611 304.40595 304.40595 0 0 0-6.51995 34.39724zm420.10574 33.312346a71.687494 71.687494 0 0 1-70.06017 63.35941c-55.75458 2.80794-81.91945-34.21642-86.07817-76.94174a123.27271 123.27271 0 0 1 10.85948-67.890396 75.729222 75.729222 0 0 1 78.83497-42.26797 72.432023 72.432023 0 0 1 64.26348 55.12705 371.94535 371.94535 0 0 1 6.24341 40.73636H638.50796c-2.71221 38.736776 18.10269 69.879356 47.6073 77.388456 36.74782 9.04071 68.1563-6.88157 79.55823-41.82125 2.5314-8.96625 7.14748-10.23195 15.29475-7.68992zM638.4016 84.629504h130.97326c-.81898-41.26817-26.51586-71.26205-61.37045-71.60241-39.35367-.63816-67.89039 28.15383-69.60281 71.60241zm169.53986 41.183076h12.83781a51.478853 51.478853 0 0 0 30.22787 44.35265 79.026422 79.026422 0 0 0 68.61365-1.80814 30.844768 30.844768 0 0 0 18.10269-30.3236 27.973013 27.973013 0 0 0-18.82595-27.97301c-14.12477-5.25425-29.14298-8.14727-43.53366-12.763346a319.0838 319.0838 0 0 1-43.81021-16.01801c-23.18675-11.31684-24.62263-55.39295 1.62733-69.34755a92.427941 92.427941 0 0 1 88.34367-1.36142c16.95398 9.35979 26.32441 28.26019 23.53775 47.43712h-11.00839c0-.5318-.9998-.99979-.9998-1.54223-1.36142-35.09922-30.86604-46.07571-62.54043-42.99123-9.57251 1.06361-18.64513 3.95664-27.15403 8.23236a27.122123 27.122123 0 0 0-15.74147 27.15404 27.122123 27.122123 0 0 0 18.10269 25.5267c13.82697 5.07343 28.50482 8.32809 42.81041 12.306l34.56741 9.04071a40.842727 40.842727 0 0 1 28.05811 36.843536c2.76539 18.56004-6.70076 36.801-23.44203 45.25672-30.22787 17.10289-80.01558 12.58254-102.1919-9.04071-11.34875-11.41256-17.67724-26.9094-17.54961-42.99123zm306.10774-67.794666h-12.0401c0-1.62733-.6382-3.19084-.819-4.43526a39.353669 39.353669 0 0 0-32.0466-37.83271 79.026422 79.026422 0 0 0-50.7769 2.44631 30.844768 30.844768 0 0 0-22.35715 29.41953 28.398458 28.398458 0 0 0 21.71895 28.60054l55.0313 14.12478a153.05386 153.05386 0 0 1 17.5497 5.33934c17.5496 6.381666 29.462 22.676216 29.9938 41.300076a45.203539 45.203539 0 0 1-27.6539 42.96995 100.72412 100.72412 0 0 1-81.4621.81898 56.477833 56.477833 0 0 1-34.0356-54.85051h11.76356c4.42463 21.32544 19.07054 39.08777 39.16224 47.49031 20.0916 8.40254 43.0337 6.33913 61.3066-5.48824a32.333825 32.333825 0 0 0 17.3794-30.22787 27.973013 27.973013 0 0 0-19.1024-27.7922c-14.1248-5.25425-29.143-8.05155-43.5337-12.763356a320.67922 320.67922 0 0 1-44.0761-15.83719c-22.6337-11.13602-24.44184-54.8505 1.3614-68.79447a91.151606 91.151606 0 0 1 89.7902-.99979 47.330764 47.330764 0 0 1 22.7188 46.43733zM325.59311 183.84329a20.740447 20.740447 0 0 1-25.70752-9.7746l-46.79895-64.72083-6.78585-9.04071-54.30807 73.85727a19.889557 19.889557 0 0 1-24.44182 9.59378l69.96445-93.863816-65.0931-84.81247c9.6576-3.48865 20.42136.29781 25.79261 9.04071l48.50074 65.51854 48.78791-65.26328a19.464112 19.464112 0 0 1 24.261-9.05134l-25.2608 33.51443-34.21642 44.53347a9.040708 9.040708 0 0 0 0 13.48661l65.16755 86.982236zM622.66013 4.177844v12.76335a65.624902 65.624902 0 0 0-69.87935 67.79467v99.564786h-12.94417V4.975554h12.76336v36.74781c15.65637-26.80304 39.82165-36.74781 70.14525-37.47107ZM.021272 88.724414l5.700964-28.15383c15.656379-55.66949 79.473139-78.83497 123.379074-44.35265 25.70751 20.18737 32.1211 48.78792 30.86604 81.01538H15.135208C12.79526 154.79603 54.329335 189.55489 107.45679 171.81383c17.50706-6.38167 30.68522-20.93189 35.02476-39.01331 2.80794-9.04071 7.44529-10.59359 15.93292-7.9771a73.495636 73.495636 0 0 1-35.12049 53.68054 85.089014 85.089014 0 0 1-99.118064-12.66763c-12.93353-14.53959-20.740447-32.91881-22.261413-52.32975 0-3.19084-1.063613-6.16895-1.808142-9.0407Q0 96.414334 0 88.724414Zm15.294751-3.89282H146.28929c-.81898-41.72553-27.15403-71.32587-62.274525-71.60241-39.098402-.53181-67.071415 28.41973-68.794468 71.42159Z"/>
-</svg>
-
-    </a>
-  </div>
-  <nav id="navbar" aria-label="primary">
-    <input id="q" placeholder="🔎 search">
-    <ul id="navmenu">
-      <li>
-        <a href="/" id="home-menu" >
-          Home
-        </a>
-      </li>
-      <li id="getting-started-menu" class="submenu">
-        <a href="/en/starter/installing.html" >
-          Getting started
-        </a>
-        <ul class="submenu-content">
-          <li>
-            <a href="/en/starter/installing.html">
-              Installing
-            </a>
-          </li>
-          <li>
-            <a href="/en/starter/hello-world.html">
-              Hello world
-            </a>
-          </li>
-          <li>
-            <a href="/en/starter/generator.html">
-              Express generator
-            </a>
-          </li>
-          <li>
-            <a href="/en/starter/basic-routing.html">
-              Basic routing
-            </a>
-          </li>
-          <li>
-            <a href="/en/starter/static-files.html">
-              Static files
-            </a>
-          </li>
-          <li>
-            <a href="/en/starter/examples.html">
-              More examples
-            </a>
-          </li>
-          <li>
-            <a href="/en/starter/faq.html">
-              FAQ
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li id="guide-menu" class="submenu">
-        <a href="/en/guide/routing.html" >
-          Guide
-        </a>
-        <ul class="submenu-content">
-          <li>
-            <a href="/en/guide/routing.html">
-              Routing
-            </a>
-          </li>
-          <li>
-            <a href="/en/guide/writing-middleware.html">
-              Writing middleware
-            </a>
-          </li>
-          <li>
-            <a href="/en/guide/using-middleware.html">
-              Using middleware
-            </a>
-          </li>
-          <li>
-            <a href="/en/guide/overriding-express-api.html">
-              Overriding the Express API
-            </a>
-          </li>
-          <li>
-            <a href="/en/guide/using-template-engines.html">
-              Using template engines
-            </a>
-          </li>
-          <li>
-            <a href="/en/guide/error-handling.html">
-              Error handling
-            </a>
-          </li>
-          <li>
-            <a href="/en/guide/debugging.html">
-              Debugging
-            </a>
-          </li>
-          <li>
-            <a href="/en/guide/behind-proxies.html">
-              Express behind proxies
-            </a>
-          </li>
-          <li>
-            <a href="/en/guide/migrating-4.html">
-              Moving to Express 4
-            </a>
-          </li>
-          <li>
-            <a href="/en/guide/migrating-5.html">
-              Moving to Express 5
-            </a>
-          </li>
-          <li>
-            <a href="/en/guide/database-integration.html">
-              Database integration
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li id="application-menu" class="submenu">
-        <a href="/en/5x/api.html" >
-          API reference
-        </a>
-        <ul class="submenu-content">
-          <li>
-            <a href="/en/5x/api.html">
-              5.x
-            </a>
-          </li>
-          <li>
-            <a href="/en/4x/api.html">
-              4.x
-            </a>
-          </li>
-          <li>
-            <a href="/en/3x/api.html">
-              3.x (deprecated)
-            </a>
-          </li>
-          <li>
-            <a href="/2x/">
-              2.x (deprecated)
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li id="advanced-topics-menu" class="submenu">
-        <a href="/en/advanced/developing-template-engines.html" >
-          Advanced topics
-        </a>
-        <ul class="submenu-content">
-          <li>
-            <a href="/en/advanced/developing-template-engines.html">
-              Building template engines
-            </a>
-          </li>
-          <li>
-            <a href="/en/advanced/security-updates.html">
-              Security updates
-            </a>
-          </li>
-          <li>
-            <a href="/en/advanced/best-practice-security.html">
-              Security best practices
-            </a>
-          </li>
-          <li>
-            <a href="/en/advanced/best-practice-performance.html">
-              Performance best practices
-            </a>
-          </li>
-          <li>
-            <a href="/en/advanced/healthcheck-graceful-shutdown.html">
-              Health checks & shutdown
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li id="resources-menu" class="submenu">
-        <a href="/en/resources/glossary.html" >
-          Resources
-        </a>
-        <ul class="submenu-content">
-          <li>
-            <a href="/en/resources/community.html">
-              Community
-            </a>
-          </li>
-          <li>
-            <a href="/en/resources/glossary.html">
-              Glossary
-            </a>
-          </li>
-          <li>
-            <a href="/en/resources/middleware.html">
-              Middleware
-            </a>
-          </li>
-          <li>
-            <a href="/en/resources/utils.html">
-              Utility modules
-            </a>
-          </li>
-          <li>
-            <a href="/en/resources/contributing.html">
-              Contributing to Express
-            </a>
-          </li>
-          <li>
-            <a href="/en/changelog">
-              Release Change Log
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <a href="/en/support" id="support-menu" >
-          Support
-        </a>
-      </li>
-      <li id="blog-menu" class="submenu">
-        <a href="/2025/03/31/v5-1-latest-release.html" >
-          Blog
-        </a>
-        <ul class="submenu-content">
-          <li>
-            <a href="/2025/03/31/v5-1-latest-release.html">
-              Latest post
-            </a>
-          </li>
-          <li>
-            <a href="/en/blog/posts.html">
-              All posts
-            </a>
-          </li>
-          <li>
-            <a href="/en/blog/write-post.html">
-              Write a Post
-            </a>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </nav>
-  <div class="header-right">
-    <button id="theme-toggle" type="button" class="theme-btn" title="change theme">
-      <i class="fa fa-moon-o fa-2x hidden-dark"></i>
-      <span class="sun-icon hidden-light"></span>
-    </button>
-    <div class="desktop-lang-switcher">
-
-
-
-<button class="lang-btn" type="button" aria-haspopup="menu" aria-label="Change language">
-  <span id="current-lang"></span>
-</button>
-<ul class="lang-list submenu-content" aria-labelledby="current-lang" >
-  
-  <li>
-    <a href="/en/">
-      
-        <strong>English</strong>
-      
-    </a>
-  </li>
-  
-  <li>
-    <a href="/fr/">
-      
-        Français
-      
-    </a>
-  </li>
-  
-  <li>
-    <a href="/de/">
-      
-        Deutsch
-      
-    </a>
-  </li>
-  
-  <li>
-    <a href="/es/">
-      
-        Español
-      
-    </a>
-  </li>
-  
-  <li>
-    <a href="/it/">
-      
-        Italiano
-      
-    </a>
-  </li>
-  
-  <li>
-    <a href="/ja/">
-      
-        日本語
-      
-    </a>
-  </li>
-  
-  <li>
-    <a href="/ru/">
-      
-        Русский
-      
-    </a>
-  </li>
-  
-  <li>
-    <a href="/zh-cn/">
-      
-        中文 (简体)
-      
-    </a>
-  </li>
-  
-  <li>
-    <a href="/zh-tw/">
-      
-        繁體中文
-      
-    </a>
-  </li>
-  
-  <li>
-    <a href="/ko/">
-      
-        한국어
-      
-    </a>
-  </li>
-  
-  <li>
-    <a href="/pt-br/">
-      
-        Português
-      
-    </a>
-  </li>
-  
-  <li>
-    <a href="/sk/">
-      
-        Slovenčina
-      
-    </a>
-  </li>
-  
-  <li>
-    <a href="/uk/">
-      
-        Українська
-      
-    </a>
-  </li>
-  
-  <li>
-    <a href="/uz/">
-      
-        Oʻzbekcha
-      
-    </a>
-  </li>
-  
-  <li>
-    <a href="/tr/">
-      
-        Türkçe
-      
-    </a>
-  </li>
-  
-  <li>
-    <a href="/th/">
-      
-        ภาษาไทย
-      
-    </a>
-  </li>
-  
-  <li>
-    <a href="/id/">
-      
-        Indonesia
-      
-    </a>
-  </li>
-  
-</ul>
-<div id="languageData" data-languages='[{"code":"en","name":"English"},{"code":"fr","name":"Français"},{"code":"de","name":"Deutsch"},{"code":"es","name":"Español"},{"code":"it","name":"Italiano"},{"code":"ja","name":"日本語"},{"code":"ru","name":"Русский"},{"code":"zh-cn","name":"中文 (简体)"},{"code":"zh-tw","name":"繁體中文"},{"code":"ko","name":"한국어"},{"code":"pt-br","name":"Português"},{"code":"sk","name":"Slovenčina"},{"code":"uk","name":"Українська"},{"code":"uz","name":"Oʻzbekcha"},{"code":"tr","name":"Türkçe"},{"code":"th","name":"ภาษาไทย"},{"code":"id","name":"Indonesia"}]' style="display:none;"></div>
-</div>
-
-    <div id="mobile-menu">
-  <div id="language-picker-button" class="button">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6" width="24" height="24" style="margin-top: 5px;">
-      <path stroke-linecap="round" stroke-linejoin="round" d="m10.5 21 5.25-11.25L21 21m-9-3h7.5M3 5.621a48.474 48.474 0 0 1 6-.371m0 0c1.12 0 2.233.038 3.334.114M9 5.25V3m3.334 2.364C11.176 10.658 7.69 15.08 3 17.502m9.334-12.138c.896.061 1.785.147 2.666.257m-4.589 8.495a18.023 18.023 0 0 1-3.827-5.802" />
-    </svg>
-  </div>
-</div>
-<div id="language-picker-menu">
-  <div id="navbar">
-    <ul id="navmenu">
-      
-
-      
-
-      
-      <li class="submenu">
-        <a href="/en/">English</a>
-      </li>
-      
-      <li class="submenu">
-        <a href="/fr/">Français</a>
-      </li>
-      
-      <li class="submenu">
-        <a href="/de/">Deutsch</a>
-      </li>
-      
-      <li class="submenu">
-        <a href="/es/">Español</a>
-      </li>
-      
-      <li class="submenu">
-        <a href="/it/">Italiano</a>
-      </li>
-      
-      <li class="submenu">
-        <a href="/ja/">日本語</a>
-      </li>
-      
-      <li class="submenu">
-        <a href="/ru/">Русский</a>
-      </li>
-      
-      <li class="submenu">
-        <a href="/zh-cn/">中文 (简体)</a>
-      </li>
-      
-      <li class="submenu">
-        <a href="/zh-tw/">繁體中文</a>
-      </li>
-      
-      <li class="submenu">
-        <a href="/ko/">한국어</a>
-      </li>
-      
-      <li class="submenu">
-        <a href="/pt-br/">Português</a>
-      </li>
-      
-      <li class="submenu">
-        <a href="/sk/">Slovenčina</a>
-      </li>
-      
-      <li class="submenu">
-        <a href="/uk/">Українська</a>
-      </li>
-      
-      <li class="submenu">
-        <a href="/uz/">Oʻzbekcha</a>
-      </li>
-      
-      <li class="submenu">
-        <a href="/tr/">Türkçe</a>
-      </li>
-      
-      <li class="submenu">
-        <a href="/th/">ภาษาไทย</a>
-      </li>
-      
-      <li class="submenu">
-        <a href="/id/">Indonesia</a>
-      </li>
-      
-    </ul>
-  </div>
-</div>
-  </div>
-</header>
-    <div id="overlay"></div>
-    <main class="content-404">
-      <h1 id="page-not-found">Page not found</h1>
-
-<p>We couldn’t find the page you’re looking for. Check the address or <a href="/">head back home</a>.</p>
-
-<p>If this is a mistake, <a href="https://github.com/expressjs/expressjs.com/issues/new/">let us know</a>, and we will try to fix it!</p>
-
-    </main>
-    <a id="top" href="#" role="button" aria-label="go to top"><svg xmlns="http://www.w3.org/2000/svg" width="10" height="6" fill="none" viewBox="0 0 1155 1000"><path fill="currentColor" d="m577.344 0 577.346 1000H0L577.344 0Z"/></svg></a>
-
-<footer>
-  <section id="doc-langs">
-    Documentation translations provided by StrongLoop/IBM:
-    <a href="/fr/">French</a>, <a href="/de/">German</a>, <a href="/es/">Spanish</a>, <a href="/it/">Italian</a>, <a
-      href="/ja/">Japanese</a>, <a href="/ru/">Russian</a>, <a href="/zh-cn/">Chinese</a>, <a href="/zh-tw/">Traditional
-      Chinese</a>, <a href="/ko/">Korean</a>, <a href="/pt-br/">Portuguese</a>.
-    <br>
-    Community translation available for: <a href="/sk/">Slovak</a>, <a href="/uk/">Ukrainian</a>, <a
-      href="/uz/">Uzbek</a>, <a href="/tr/">Turkish</a>, <a href="/th/">Thai</a> and <a href="/id/">Indonesian</a>.
-  </section>
-  <section id="footer-content">
-    <div id="footer-copyright">
-      <a href="https://openjsf.org/">
-        <img
-          src="https://raw.githubusercontent.com/openjs-foundation/artwork/main/openjs_foundation/openjs_foundation-logo-horizontal-color.svg"
-          alt="OpenJS Foundation" width="125" height="39" class="hidden-dark" />
-        <img
-          src="https://raw.githubusercontent.com/openjs-foundation/artwork/main/openjs_foundation/openjs_foundation-logo-horizontal-white.svg"
-          alt="OpenJS Foundation" width="125" height="39" class="hidden-light" />
-      </a>
-      <div id="footer-policy">
-        <a href="https://terms-of-use.openjsf.org">
-          Terms of Use
-        </a>
-        <a href="https://privacy-policy.openjsf.org">
-          Privacy Policy
-        </a>
-        <a id="coc" href="https://github.com/expressjs/express/blob/master/Code-Of-Conduct.md">
-          Code of Conduct
-        </a>
-        <a href="https://trademark-policy.openjsf.org">
-          Trademark Policy
-        </a>
-        <a id="security" href="https://github.com/expressjs/express/security/policy">
-          Security Policy
-        </a>
-      </div>
+<body>
+<nav class="navbar navbar-expand-sm navbar-dark navbar-static-top d-print-none" style="background-color:#1d8286;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/" title="Vector Logo Zone"><img src="/images/about/vlzlogo-white.svg" alt="Vector Logo Zone Logo" class="navbar-logo" /></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
     </div>
-    <div id="footer-links">
-      <div class="footer-social">
-        <div>
-          <a href="https://github.com/expressjs/express" aria-label="Go to the repository on GitHub">
-            <span class="hidden-dark">
-              <svg
-    viewBox="0 0 256 250"
-    width="20"
-    height="20"
-    fill="#24292f"
-    xmlns="http://www.w3.org/2000/svg"
-    preserveAspectRatio="xMidYMid"
->
-    <path
-        d="M128.001 0C57.317 0 0 57.307 0 128.001c0 56.554 36.676 104.535 87.535 121.46 6.397 1.185 8.746-2.777 8.746-6.158 0-3.052-.12-13.135-.174-23.83-35.61 7.742-43.124-15.103-43.124-15.103-5.823-14.795-14.213-18.73-14.213-18.73-11.613-7.944.876-7.78.876-7.78 12.853.902 19.621 13.19 19.621 13.19 11.417 19.568 29.945 13.911 37.249 10.64 1.149-8.272 4.466-13.92 8.127-17.116-28.431-3.236-58.318-14.212-58.318-63.258 0-13.975 5-25.394 13.188-34.358-1.329-3.224-5.71-16.242 1.24-33.874 0 0 10.749-3.44 35.21 13.121 10.21-2.836 21.16-4.258 32.038-4.307 10.878.049 21.837 1.47 32.066 4.307 24.431-16.56 35.165-13.12 35.165-13.12 6.967 17.63 2.584 30.65 1.255 33.873 8.207 8.964 13.173 20.383 13.173 34.358 0 49.163-29.944 59.988-58.447 63.157 4.591 3.972 8.682 11.762 8.682 23.704 0 17.126-.148 30.91-.148 35.126 0 3.407 2.304 7.398 8.792 6.14C219.37 232.5 256 184.537 256 128.002 256 57.307 198.691 0 128.001 0Zm-80.06 182.34c-.282.636-1.283.827-2.194.39-.929-.417-1.45-1.284-1.15-1.922.276-.655 1.279-.838 2.205-.399.93.418 1.46 1.293 1.139 1.931Zm6.296 5.618c-.61.566-1.804.303-2.614-.591-.837-.892-.994-2.086-.375-2.66.63-.566 1.787-.301 2.626.591.838.903 1 2.088.363 2.66Zm4.32 7.188c-.785.545-2.067.034-2.86-1.104-.784-1.138-.784-2.503.017-3.05.795-.547 2.058-.055 2.861 1.075.782 1.157.782 2.522-.019 3.08Zm7.304 8.325c-.701.774-2.196.566-3.29-.49-1.119-1.032-1.43-2.496-.726-3.27.71-.776 2.213-.558 3.315.49 1.11 1.03 1.45 2.505.701 3.27Zm9.442 2.81c-.31 1.003-1.75 1.459-3.199 1.033-1.448-.439-2.395-1.613-2.103-2.626.301-1.01 1.747-1.484 3.207-1.028 1.446.436 2.396 1.602 2.095 2.622Zm10.744 1.193c.036 1.055-1.193 1.93-2.715 1.95-1.53.034-2.769-.82-2.786-1.86 0-1.065 1.202-1.932 2.733-1.958 1.522-.03 2.768.818 2.768 1.868Zm10.555-.405c.182 1.03-.875 2.088-2.387 2.37-1.485.271-2.861-.365-3.05-1.386-.184-1.056.893-2.114 2.376-2.387 1.514-.263 2.868.356 3.061 1.403Z" />
-</svg>
-            </span>
-            <span class="hidden-light">
-              <svg
-    viewBox="0 0 256 250"
-    width="20"
-    height="20"
-    fill="#fff"
-    xmlns="http://www.w3.org/2000/svg"
-    preserveAspectRatio="xMidYMid"
->
-    <path
-        d="M128.001 0C57.317 0 0 57.307 0 128.001c0 56.554 36.676 104.535 87.535 121.46 6.397 1.185 8.746-2.777 8.746-6.158 0-3.052-.12-13.135-.174-23.83-35.61 7.742-43.124-15.103-43.124-15.103-5.823-14.795-14.213-18.73-14.213-18.73-11.613-7.944.876-7.78.876-7.78 12.853.902 19.621 13.19 19.621 13.19 11.417 19.568 29.945 13.911 37.249 10.64 1.149-8.272 4.466-13.92 8.127-17.116-28.431-3.236-58.318-14.212-58.318-63.258 0-13.975 5-25.394 13.188-34.358-1.329-3.224-5.71-16.242 1.24-33.874 0 0 10.749-3.44 35.21 13.121 10.21-2.836 21.16-4.258 32.038-4.307 10.878.049 21.837 1.47 32.066 4.307 24.431-16.56 35.165-13.12 35.165-13.12 6.967 17.63 2.584 30.65 1.255 33.873 8.207 8.964 13.173 20.383 13.173 34.358 0 49.163-29.944 59.988-58.447 63.157 4.591 3.972 8.682 11.762 8.682 23.704 0 17.126-.148 30.91-.148 35.126 0 3.407 2.304 7.398 8.792 6.14C219.37 232.5 256 184.537 256 128.002 256 57.307 198.691 0 128.001 0Zm-80.06 182.34c-.282.636-1.283.827-2.194.39-.929-.417-1.45-1.284-1.15-1.922.276-.655 1.279-.838 2.205-.399.93.418 1.46 1.293 1.139 1.931Zm6.296 5.618c-.61.566-1.804.303-2.614-.591-.837-.892-.994-2.086-.375-2.66.63-.566 1.787-.301 2.626.591.838.903 1 2.088.363 2.66Zm4.32 7.188c-.785.545-2.067.034-2.86-1.104-.784-1.138-.784-2.503.017-3.05.795-.547 2.058-.055 2.861 1.075.782 1.157.782 2.522-.019 3.08Zm7.304 8.325c-.701.774-2.196.566-3.29-.49-1.119-1.032-1.43-2.496-.726-3.27.71-.776 2.213-.558 3.315.49 1.11 1.03 1.45 2.505.701 3.27Zm9.442 2.81c-.31 1.003-1.75 1.459-3.199 1.033-1.448-.439-2.395-1.613-2.103-2.626.301-1.01 1.747-1.484 3.207-1.028 1.446.436 2.396 1.602 2.095 2.622Zm10.744 1.193c.036 1.055-1.193 1.93-2.715 1.95-1.53.034-2.769-.82-2.786-1.86 0-1.065 1.202-1.932 2.733-1.958 1.522-.03 2.768.818 2.768 1.868Zm10.555-.405c.182 1.03-.875 2.088-2.387 2.37-1.485.271-2.861-.365-3.05-1.386-.184-1.056.893-2.114 2.376-2.387 1.514-.263 2.868.356 3.061 1.403Z" />
-</svg>
-            </span>
-          </a>
-        </div>
-        <div>
-          <a href="https://www.youtube.com/channel/UCYjxjAeH6TRik9Iwy5nXw7g"
-            aria-label="Go to the repository on Youtube"><svg viewBox="0 0 256 180" height="20" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid"><path d="M250.346 28.075A32.18 32.18 0 0 0 227.69 5.418C207.824 0 127.87 0 127.87 0S47.912.164 28.046 5.582A32.18 32.18 0 0 0 5.39 28.24c-6.009 35.298-8.34 89.084.165 122.97a32.18 32.18 0 0 0 22.656 22.657c19.866 5.418 99.822 5.418 99.822 5.418s79.955 0 99.82-5.418a32.18 32.18 0 0 0 22.657-22.657c6.338-35.348 8.291-89.1-.164-123.134Z" fill="red"/><path fill="#FFF" d="m102.421 128.06 66.328-38.418-66.328-38.418z"/></svg></a>
-        </div>
-        <div>
-          <a href="https://x.com/UseExpressJS" aria-label="Go to the repository on X">
-            <span class="hidden-dark">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 1200 1227"><path fill="#000" d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg>
-            </span>
-            <span class="hidden-light">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 1200 1227"><path fill="#fff" d="M714.163 519.284 1160.89 0h-105.86L667.137 450.887 357.328 0H0l468.492 681.821L0 1226.37h105.866l409.625-476.152 327.181 476.152H1200L714.137 519.284h.026ZM569.165 687.828l-47.468-67.894-377.686-540.24h162.604l304.797 435.991 47.468 67.894 396.2 566.721H892.476L569.165 687.854v-.026Z"/></svg>
-            </span>
-          </a>
-        </div>
-        <div>
-          <a href="https://openjs-foundation.slack.com/archives/C02QB1731FH"
-            aria-label="Go to the repository on Slack"><svg
-  viewBox="0 0 2447.6 2452.5"
-  xmlns="http://www.w3.org/2000/svg"
-  width="20"
-  height="20"
->
-  <g clip-rule="evenodd" fill-rule="evenodd">
-    <path
-      d="m897.4 0c-135.3.1-244.8 109.9-244.7 245.2-.1 135.3 109.5 245.1 244.8 245.2h244.8v-245.1c.1-135.3-109.5-245.1-244.9-245.3.1 0 .1 0 0 0m0 654h-652.6c-135.3.1-244.9 109.9-244.8 245.2-.2 135.3 109.4 245.1 244.7 245.3h652.7c135.3-.1 244.9-109.9 244.8-245.2.1-135.4-109.5-245.2-244.8-245.3z"
-      fill="#36c5f0"
-    />
-    <path
-      d="m2447.6 899.2c.1-135.3-109.5-245.1-244.8-245.2-135.3.1-244.9 109.9-244.8 245.2v245.3h244.8c135.3-.1 244.9-109.9 244.8-245.3zm-652.7 0v-654c.1-135.2-109.4-245-244.7-245.2-135.3.1-244.9 109.9-244.8 245.2v654c-.2 135.3 109.4 245.1 244.7 245.3 135.3-.1 244.9-109.9 244.8-245.3z"
-      fill="#2eb67d"
-    />
-    <path
-      d="m1550.1 2452.5c135.3-.1 244.9-109.9 244.8-245.2.1-135.3-109.5-245.1-244.8-245.2h-244.8v245.2c-.1 135.2 109.5 245 244.8 245.2zm0-654.1h652.7c135.3-.1 244.9-109.9 244.8-245.2.2-135.3-109.4-245.1-244.7-245.3h-652.7c-135.3.1-244.9 109.9-244.8 245.2-.1 135.4 109.4 245.2 244.7 245.3z"
-      fill="#ecb22e"
-    />
-    <path
-      d="m0 1553.2c-.1 135.3 109.5 245.1 244.8 245.2 135.3-.1 244.9-109.9 244.8-245.2v-245.2h-244.8c-135.3.1-244.9 109.9-244.8 245.2zm652.7 0v654c-.2 135.3 109.4 245.1 244.7 245.3 135.3-.1 244.9-109.9 244.8-245.2v-653.9c.2-135.3-109.4-245.1-244.7-245.3-135.4 0-244.9 109.8-244.8 245.1 0 0 0 .1 0 0"
-      fill="#e01e5a"
-    />
-  </g>
-</svg>
-</a>
-        </div>
-        <div>
-          <a href="https://opencollective.com/express" aria-label="Go to the repository on Open Collective"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 64 64" fill-rule="evenodd"><path d="M52.402 31.916c0 4.03-1.17 7.895-3.178 11.087l8.196 8.23c4.014-5.375 6.523-12.094 6.523-19.318s-2.51-13.942-6.523-19.318l-8.196 8.23c2.007 3.192 3.178 6.887 3.178 11.087z" fill="#b8d3f4"/><path d="M32.004 52.41c-11.207 0-20.406-9.24-20.406-20.493s9.2-20.493 20.406-20.493c4.182 0 7.86 1.176 11.04 3.36l8.196-8.23C45.887 2.52 39.197 0 32.004 0 14.44 0 .057 14.278.057 32.084S14.44 64 32.004 64c7.36 0 14.05-2.52 19.403-6.55l-8.196-8.23c-3.178 2.016-7.025 3.192-11.207 3.192z" fill="#3385ff"/></svg></a>
-        </div>
-        <div>
-          <a href="https://bsky.app/profile/expressjs.bsky.social" aria-label="Go to the repository on Bluesky"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -3.268 64 68.414" height="20" width="20"><path fill="#0085ff" d="M13.873 3.805C21.21 9.332 29.103 20.537 32 26.55v15.882c0-.338-.13.044-.41.867-1.512 4.456-7.418 21.847-20.923 7.944-7.111-7.32-3.819-14.64 9.125-16.85-7.405 1.264-15.73-.825-18.014-9.015C1.12 23.022 0 8.51 0 6.55 0-3.268 8.579-.182 13.873 3.805zm36.254 0C42.79 9.332 34.897 20.537 32 26.55v15.882c0-.338.13.044.41.867 1.512 4.456 7.418 21.847 20.923 7.944 7.111-7.32 3.819-14.64-9.125-16.85 7.405 1.264 15.73-.825 18.014-9.015C62.88 23.022 64 8.51 64 6.55c0-9.818-8.578-6.732-13.873-2.745z"/></svg></a>
-        </div>
-      </div>
-      <a href="https://www.netlify.com">
-        <img src="https://www.netlify.com/v3/img/components/netlify-color-accent.svg" alt="Preview Deploys by Netlify"
-          width="80" />
-      </a>
-    </div>
-  </section>
+    <div class="navbar-collapse collapse navbar-right" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a class="nav-link" href="/about.html">About</a></li>
+            <li class="nav-item"><a class="nav-link" href="/logos/index.html">A&#8209;Z</a></li>
+            <li class="nav-item"><a class="nav-link" href="/support/index.html">FAQ</a></li>
+            <li class="nav-item"><a class="nav-link" href="https://github.com/VectorLogoZone/vectorlogozone/blob/main/CONTRIBUTING.md">Contribute</a></li>
+            <li class="nav-item"><a class="nav-link" href="/report/index.html">Reports</a></li>
+            <li class="nav-item"><a class="nav-link" href="/index.html" title="Search"><svg alt="search" style="width: 1em; height: 1em; vertical-align:-.125em;" aria-hidden="true" data-prefix="fas" data-icon="search" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path></svg><span class="d-none">Search</span></a></li>
+        </ul>
+    </div><!--/.navbar-collapse -->
+</nav>
+
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h1>404 - Page Not Found</h1>
+				<p>The page you requested could not be found!</p>
+
+			</div><!--/col-->
+		</div><!--/row--><hr/><footer class="d-print-none">
+	<p class="small text-muted text-center">
+        Follow:
+        <a href="https://logo-of-the-day.vectorlogo.zone/" title="Logo of the day"><img alt="Logo of the day" src="https://logo-of-the-day.vectorlogo.zone/favicon.svg" class="social-footer"/></a>
+        <a href="https://www.github.com/VectorLogoZone/vectorlogozone" title="Fork VectorLogoZone on Github"><img alt="Github" src="/logos/github/github-tile.svg" class="social-footer"/></a>
+        <a href="https://www.facebook.com/vectorlogozone" title="Follow VectorLogoZone on Facebook"><img alt="Facebook" src="/logos/facebook/facebook-tile.svg" class="social-footer"/></a>
+        <a rel="me" href="https://botsin.space/@VectorLogoZone" title="Follow VectorLogoZone on Mastodon"><img alt="Mastodon" src="/logos/joinmastodon/joinmastodon-tile.svg" class="social-footer"/></a>
+        | <a href="https://validator.w3.org/check/referer">Validate HTML</a>
+    </p>
 </footer>
-
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js" onload="docsearch({
-  apiKey: '7164e33055faa6ecddefd9e08fc59f5d',
-  indexName: 'expressjs',
-  inputSelector: '#q',
-  algoliaOptions: { 'facetFilters': ['lang:en'] }
-})" async></script>
-
-  </body>
+</div><!--/container--><!-- Google Analytics -->
+<script>
+    var dnt = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+    if (dnt != "1" && dnt != "yes") {
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-328425-25', 'auto');
+        ga('set', 'anonymizeIp', true);
+        ga('send', 'pageview');
+    } else {
+        console.debug("Respecting Do-Not-Track, not loading analytics. See https://www.paulfurley.com/google-analytics-dnt/");
+    }
+</script>
+<!-- End Google Analytics --></body>
 </html>
