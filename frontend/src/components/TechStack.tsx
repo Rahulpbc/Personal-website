@@ -198,8 +198,9 @@ const TechStack = () => {
             />
           ))}
         </Physics>
+        {/* Use a preset environment instead of trying to load a custom HDR file */}
         <Environment
-          files="/models/char_enviorment.hdr"
+          preset="city"
           environmentIntensity={0.5}
           environmentRotation={[0, 4, 2]}
         />
