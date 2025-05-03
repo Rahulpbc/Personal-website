@@ -130,9 +130,16 @@ const TechStack = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY || document.documentElement.scrollTop;
-      const threshold = document
-        .getElementById("work")!
-        .getBoundingClientRect().top;
+      
+      // Add null check for the 'work' element
+      const workElement = document.getElementById("work");
+      if (!workElement) {
+        // If element doesn't exist, don't activate
+        setIsActive(false);
+        return;
+      }
+      
+      const threshold = workElement.getBoundingClientRect().top;
       setIsActive(scrollY > threshold);
     };
     document.querySelectorAll(".header a").forEach((elem) => {
