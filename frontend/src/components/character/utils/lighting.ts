@@ -18,14 +18,37 @@ const setLighting = (scene: THREE.Scene) => {
   pointLight.castShadow = true;
   scene.add(pointLight);
 
-  new RGBELoader()
-    .setPath("/models/")
-    .load("char_enviorment.hdr", function (texture) {
-      texture.mapping = THREE.EquirectangularReflectionMapping;
-      scene.environment = texture;
-      scene.environmentIntensity = 0;
-      scene.environmentRotation.set(5.76, 85.85, 1);
-    });
+  // Try to load HDR environment map with error handling
+  try {
+    new RGBELoader()
+      .setPath("/models/")
+      .load("char_enviorment.hdr", 
+        // Success callback
+        function (texture) {
+          texture.mapping = THREE.EquirectangularReflectionMapping;
+          scene.environment = texture;
+          scene.environmentIntensity = 0;
+          scene.environmentRotation.set(5.76, 85.85, 1);
+        },
+        // Progress callback
+        undefined,
+        // Error callback
+        function (error) {
+          console.log("Could not load HDR environment map, using fallback lighting");
+          // Fallback: Create a basic environment
+          const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+          scene.add(ambientLight);
+          
+          // Set a basic environment color
+          scene.background = new THREE.Color(0x303030);
+        }
+      );
+  } catch (error) {
+    console.log("Error setting up environment lighting:", error);
+    // Fallback lighting in case of exception
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+    scene.add(ambientLight);
+  }
 
   function setPointLight(screenLight: any) {
     if (screenLight.material.opacity > 0.9) {
