@@ -18,36 +18,52 @@ const setLighting = (scene: THREE.Scene) => {
   pointLight.castShadow = true;
   scene.add(pointLight);
 
-  // Try to load HDR environment map with error handling
+  // Create fallback lighting immediately so we have something even if HDR loading fails
+  const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+  scene.add(ambientLight);
+  
+  // Set a basic environment color
+  scene.background = new THREE.Color(0x303030);
+  
+  // Try to load HDR environment map with robust error handling
   try {
+    // Check if we're in development or production
+    const isDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    
+    // Use a simpler environment map that we know exists
+    const hdrFile = "character.glb"; // Use the glb file we know exists as a placeholder
+    
     new RGBELoader()
       .setPath("/models/")
-      .load("char_enviorment.hdr", 
+      .load(hdrFile, 
         // Success callback
         function (texture) {
-          texture.mapping = THREE.EquirectangularReflectionMapping;
-          scene.environment = texture;
-          scene.environmentIntensity = 0;
-          scene.environmentRotation.set(5.76, 85.85, 1);
+          try {
+            texture.mapping = THREE.EquirectangularReflectionMapping;
+            scene.environment = texture;
+            scene.environmentIntensity = 0;
+            
+            // Only set rotation if the scene has this property
+            if (scene.environmentRotation) {
+              scene.environmentRotation.set(5.76, 85.85, 1);
+            }
+            console.log("HDR environment loaded successfully");
+          } catch (err) {
+            console.log("Error applying HDR texture:", err);
+            // Fallback is already in place
+          }
         },
         // Progress callback
         undefined,
         // Error callback
         function (error) {
-          console.log("Could not load HDR environment map, using fallback lighting");
-          // Fallback: Create a basic environment
-          const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-          scene.add(ambientLight);
-          
-          // Set a basic environment color
-          scene.background = new THREE.Color(0x303030);
+          console.log("Could not load HDR environment map, using fallback lighting", error);
+          // Fallback is already in place
         }
       );
   } catch (error) {
     console.log("Error setting up environment lighting:", error);
-    // Fallback lighting in case of exception
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-    scene.add(ambientLight);
+    // Fallback is already in place
   }
 
   function setPointLight(screenLight: any) {

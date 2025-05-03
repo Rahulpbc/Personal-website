@@ -20,6 +20,7 @@ const Scene = () => {
   const { setLoading } = useLoading();
 
   const [character, setChar] = useState<THREE.Object3D | null>(null);
+  
   useEffect(() => {
     if (canvasDiv.current) {
       let rect = canvasDiv.current.getBoundingClientRect();
@@ -54,35 +55,59 @@ const Scene = () => {
       const { loadCharacter } = setCharacter(renderer, scene, camera);
 
       loadCharacter().then((gltf) => {
-        if (gltf) {
-          const animations = setAnimations(gltf);
-          hoverDivRef.current && animations.hover(gltf, hoverDivRef.current);
-          mixer = animations.mixer;
-          let character = gltf.scene;
-          setChar(character);
-          scene.add(character);
-          // Handle missing objects gracefully
-          headBone = character.getObjectByName("spine006") || null;
-          screenLight = character.getObjectByName("screenlight") || null;
-          
-          // Scale and position the duck model appropriately
-          character.scale.set(0.5, 0.5, 0.5);
-          character.position.set(0, 8, 0);
-          
-          progress.loaded().then(() => {
-            setTimeout(() => {
-              light.turnOnLights();
-              // Only call startIntro if it exists
-              if (typeof animations.startIntro === 'function') {
-                animations.startIntro();
-              }
-            }, 2500);
-          });
-          window.addEventListener("resize", () => {
-            if (canvasDiv.current) {
-              handleResize(renderer, camera, {current: canvasDiv.current}, character);
+        try {
+          if (gltf && gltf.scene) {
+            const animations = setAnimations(gltf);
+            if (hoverDivRef.current) {
+              animations.hover(gltf, hoverDivRef.current);
             }
-          });
+            mixer = animations.mixer;
+            let character = gltf.scene;
+            setChar(character);
+            scene.add(character);
+            
+            // Handle missing objects gracefully
+            headBone = character.getObjectByName("spine006") || null;
+            screenLight = character.getObjectByName("screenlight") || null;
+            
+            // Safely scale and position the model
+            if (character && character.scale && character.position) {
+              character.scale.set(0.5, 0.5, 0.5);
+              character.position.set(0, 8, 0);
+              console.log("Character positioned successfully");
+            } else {
+              console.error("Character missing scale or position properties");
+            }
+            
+            progress.loaded().then(() => {
+              setTimeout(() => {
+                // Safely turn on lights
+                if (light && typeof light.turnOnLights === 'function') {
+                  light.turnOnLights();
+                }
+                
+                // Only call startIntro if it exists
+                if (animations && typeof animations.startIntro === 'function') {
+                  animations.startIntro();
+                }
+              }, 2500);
+            });
+            
+            // Add resize listener
+            window.addEventListener("resize", () => {
+              if (canvasDiv.current) {
+                handleResize(renderer, camera, {current: canvasDiv.current}, character);
+              }
+            });
+          } else {
+            console.error("Failed to load character model: gltf or gltf.scene is undefined");
+            // Complete loading anyway to avoid hanging
+            progress.loaded();
+          }
+        } catch (error) {
+          console.error("Error setting up character:", error);
+          // Complete loading anyway to avoid hanging
+          progress.loaded();
         }
       });
 
@@ -117,40 +142,72 @@ const Scene = () => {
       }
       const animate = () => {
         requestAnimationFrame(animate);
-        if (headBone) {
-          handleHeadRotation(
-            headBone,
-            mouse.x,
-            mouse.y,
-            interpolation.x,
-            interpolation.y,
-            THREE.MathUtils.lerp
-          );
-          light.setPointLight(screenLight);
+        
+        try {
+          // Only attempt head rotation if headBone exists
+          if (headBone) {
+            handleHeadRotation(
+              headBone,
+              mouse.x,
+              mouse.y,
+              interpolation.x,
+              interpolation.y,
+              THREE.MathUtils.lerp
+            );
+            
+            // Only call setPointLight if both light and screenLight exist
+            if (light && typeof light.setPointLight === 'function' && screenLight) {
+              light.setPointLight(screenLight);
+            }
+          }
+          
+          // Update animation mixer if it exists
+          const delta = clock.getDelta();
+          if (mixer) {
+            mixer.update(delta);
+          }
+          
+          // Render the scene
+          if (renderer && scene && camera) {
+            renderer.render(scene, camera);
+          }
+        } catch (error) {
+          console.error("Error in animation loop:", error);
         }
-        const delta = clock.getDelta();
-        if (mixer) {
-          mixer.update(delta);
-        }
-        renderer.render(scene, camera);
       };
       animate();
       return () => {
-        clearTimeout(debounce);
-        scene.clear();
-        renderer.dispose();
-        window.removeEventListener("resize", () => {
-          if (character && canvasDiv.current) {
-            handleResize(renderer, camera, {current: canvasDiv.current}, character);
+        try {
+          // Clear any pending timeouts
+          if (debounce) {
+            clearTimeout(debounce);
           }
-        });
-        if (canvasDiv.current) {
-          canvasDiv.current.removeChild(renderer.domElement);
-        }
-        document.removeEventListener("mousemove", onMouseMove);
-        if (landingDiv) {
-          landingDiv.removeEventListener("touchstart", onTouchStart);
-          landingDiv.removeEventListener("touchend", onTouchEnd);
+          
+          // Clean up scene and renderer if they exist
+          if (sceneRef.current) {
+            sceneRef.current.clear();
+          }
+          
+          if (renderer) {
+            renderer.dispose();
+            
+            // Remove renderer from DOM if canvas exists
+            if (canvasDiv.current && renderer.domElement && canvasDiv.current.contains(renderer.domElement)) {
+              canvasDiv.current.removeChild(renderer.domElement);
+            }
+          }
+          
+          // Remove event listeners
+          document.removeEventListener("mousemove", onMouseMove);
+          
+          if (landingDiv) {
+            landingDiv.removeEventListener("touchstart", onTouchStart);
+            landingDiv.removeEventListener("touchend", onTouchEnd);
+          }
+          
+          console.log("Scene cleanup completed successfully");
+        } catch (error) {
+          console.error("Error during scene cleanup:", error);
         }
       };
     }
