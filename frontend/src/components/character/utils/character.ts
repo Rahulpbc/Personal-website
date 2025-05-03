@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { DRACOLoader, GLTF, GLTFLoader } from "three-stdlib";
-import { setCharTimeline, setAllTimeline } from "../../utils/GsapScroll";
+import { setCharTimeline, setAllTimeline } from "../../utils/GsapScrolls";
 import { decryptFile } from "./decrypt";
 
 const setCharacter = (

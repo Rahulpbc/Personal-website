@@ -1,0 +1,34 @@
+.cursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  pointer-events: none;
+  mix-blend-mode: difference;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+}
+
+.cursor.hover {
+  transform: translate(-50%, -50%) scale(2);
+  background-color: rgba(255, 255, 255, 0.8);
+  transition: transform 0.3s ease;
+}
+
+.cursor.click {
+  transform: translate(-50%, -50%) scale(0.8);
+  background-color: rgba(255, 255, 255, 1);
+  transition: transform 0.1s ease;
+}
+
+/* Hide default cursor when custom cursor is active */
+body:has(.cursor) {
+  cursor: none;
+}
+
+@media (max-width: 768px) {
+  .cursor {
+    display: none;
+  }
+}
