@@ -158,20 +158,26 @@ const TechStack = () => {
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY || document.documentElement.scrollTop;
-      
-      // Add null check for the 'work' element
-      const workElement = document.getElementById("work");
-      if (!workElement) {
-        // If element doesn't exist, don't activate
-        setIsActive(false);
-        return;
-      }
-      
-      const threshold = workElement.getBoundingClientRect().top;
-      setIsActive(scrollY > threshold);
+    // Create a reference to the techstack element
+    const techstackRef = document.querySelector('.techstack');
+    
+    // Function to check if element is in viewport
+    const isInViewport = (element: Element) => {
+      if (!element) return false;
+      const rect = element.getBoundingClientRect();
+      return (
+        rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.bottom >= 0
+      );
     };
+    
+    const handleScroll = () => {
+      if (techstackRef) {
+        setIsActive(isInViewport(techstackRef));
+      }
+    };
+    
+    // Handle navigation clicks
     document.querySelectorAll(".header a").forEach((elem) => {
       const element = elem as HTMLAnchorElement;
       element.addEventListener("click", () => {
@@ -183,7 +189,11 @@ const TechStack = () => {
         }, 1000);
       });
     });
+    
+    // Initial check and scroll listener
+    handleScroll();
     window.addEventListener("scroll", handleScroll);
+    
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
