@@ -11,7 +11,11 @@ import {
   RapierRigidBody,
 } from "@react-three/rapier";
 
+// Create a texture loader with proper error handling
 const textureLoader = new THREE.TextureLoader();
+textureLoader.crossOrigin = 'anonymous';
+
+// Define image URLs
 const imageUrls = [
   "/images/react.png",
   "/images/java.png",
@@ -30,7 +34,25 @@ const imageUrls = [
   "/images/redis.png",
   "/images/terraform.png",
 ];
-const textures = imageUrls.map((url) => textureLoader.load(url));
+
+// Load textures with error handling
+const textures = imageUrls.map((url) => {
+  console.log(`Attempting to load texture: ${url}`);
+  const texture = textureLoader.load(
+    url,
+    (loadedTexture) => {
+      console.log(`Successfully loaded texture: ${url}`, loadedTexture);
+    },
+    (progress) => {
+      console.log(`Loading texture progress for ${url}:`, progress);
+    },
+    (error) => {
+      console.error(`Error loading texture ${url}:`, error);
+    }
+  );
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+});
 
 const sphereGeometry = new THREE.SphereGeometry(1, 28, 28);
 
@@ -173,10 +195,13 @@ const TechStack = () => {
           map: texture,
           emissive: "#ffffff",
           emissiveMap: texture,
-          emissiveIntensity: 0.3,
-          metalness: 0.5,
-          roughness: 1,
-          clearcoat: 0.1,
+          emissiveIntensity: 0.6, // Increased for better visibility
+          metalness: 0.7,
+          roughness: 0.3, // Reduced for better reflection
+          clearcoat: 0.5, // Increased for better shine
+          transparent: true,
+          opacity: 1.0,
+          side: THREE.DoubleSide, // Render both sides
         })
     );
   }, []);
@@ -192,16 +217,18 @@ const TechStack = () => {
         onCreated={(state) => (state.gl.toneMappingExposure = 1.5)}
         className="tech-canvas"
       >
-        <ambientLight intensity={1} />
+        <ambientLight intensity={1.5} /> {/* Increased intensity */}
         <spotLight
           position={[20, 20, 25]}
           penumbra={1}
-          angle={0.2}
+          angle={0.3} /* Wider angle */
           color="white"
+          intensity={1.5} /* Added intensity */
           castShadow
-          shadow-mapSize={[512, 512]}
+          shadow-mapSize={[1024, 1024]} /* Increased shadow map size */
         />
-        <directionalLight position={[0, 5, -4]} intensity={2} />
+        <directionalLight position={[0, 5, -4]} intensity={2.5} /> {/* Increased intensity */}
+        <pointLight position={[-10, 0, -20]} intensity={1.5} color="#ffffff" /> {/* Added point light */}
         <Physics gravity={[0, 0, 0]}>
           <Pointer isActive={isActive} />
           {spheres.map((props, i) => (
