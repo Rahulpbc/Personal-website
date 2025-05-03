@@ -1,7 +1,6 @@
 import * as THREE from "three";
 import { DRACOLoader, GLTF, GLTFLoader } from "three-stdlib";
 import { setCharTimeline, setAllTimeline } from "../../utils/GsapScrolls";
-import { decryptFile } from "./decrypt";
 
 const setCharacter = (
   renderer: THREE.WebGLRenderer,
@@ -16,15 +15,10 @@ const setCharacter = (
   const loadCharacter = () => {
     return new Promise<GLTF | null>(async (resolve, reject) => {
       try {
-        const encryptedBlob = await decryptFile(
-          "/models/character.enc",
-          "Character3D#@"
-        );
-        const blobUrl = URL.createObjectURL(new Blob([encryptedBlob]));
-
+        // Load standard GLB model instead of encrypted one
         let character: THREE.Object3D;
         loader.load(
-          blobUrl,
+          "/models/character.glb",
           async (gltf) => {
             character = gltf.scene;
             await renderer.compileAsync(character, camera, scene);

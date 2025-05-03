@@ -61,12 +61,21 @@ const Scene = () => {
           let character = gltf.scene;
           setChar(character);
           scene.add(character);
+          // Handle missing objects gracefully
           headBone = character.getObjectByName("spine006") || null;
           screenLight = character.getObjectByName("screenlight") || null;
+          
+          // Scale and position the duck model appropriately
+          character.scale.set(0.5, 0.5, 0.5);
+          character.position.set(0, 8, 0);
+          
           progress.loaded().then(() => {
             setTimeout(() => {
               light.turnOnLights();
-              animations.startIntro();
+              // Only call startIntro if it exists
+              if (typeof animations.startIntro === 'function') {
+                animations.startIntro();
+              }
             }, 2500);
           });
           window.addEventListener("resize", () => {
