@@ -295,8 +295,9 @@ h2.landing-info-h2 {
   .character-model {
     height: 100vh;
     bottom: 0;
-    z-index: 11;
-    position: fixed;
+    z-index: 2; /* Lower z-index so it doesn't block content */
+    position: absolute; /* Change from fixed to absolute */
+    background-color: transparent; /* Ensure background is transparent */
   }
   .character-model::after,
   .character-model::before {
