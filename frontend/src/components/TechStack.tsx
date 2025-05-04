@@ -3,6 +3,7 @@ import { useRef, useMemo, useState, useEffect } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Environment, Text, Billboard, Plane } from "@react-three/drei";
 import { EffectComposer, N8AO } from "@react-three/postprocessing";
+import "./styles/TechStack.css";
 
 // Create a texture loader with proper error handling
 const textureLoader = new THREE.TextureLoader();
@@ -71,8 +72,20 @@ const textures: TechItem[] = techData.map(tech => {
   };
 });
 
-// Calculate positions in a circular pattern
-const createPositions = (count: number, radius: number = 12): [number, number, number][] => {
+// Calculate responsive positions based on screen size
+const createPositions = (count: number): [number, number, number][] => {
+  // Adjust radius based on screen width for responsiveness
+  const getResponsiveRadius = () => {
+    const width = window.innerWidth;
+    if (width < 600) return 8;  // Mobile
+    if (width < 1024) return 10; // Tablet
+    if (width < 1600) return 12; // Laptop
+    return 15; // Large desktop
+  };
+  
+  const radius = getResponsiveRadius();
+  console.log(`Using responsive radius: ${radius} for screen width: ${window.innerWidth}`);
+  
   return Array.from({ length: count }, (_, i) => {
     const angle = (i / count) * Math.PI * 2; // Distribute around a circle
     const x = Math.cos(angle) * radius * Math.random() * 0.5 + radius * Math.cos(angle);
@@ -96,6 +109,14 @@ function ScreenLogo({ texture, name, position, isActive }: ScreenLogoProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const groupRef = useRef<THREE.Group>(null);
   const { camera } = useThree();
+  
+  // Responsive card sizing based on screen width
+  const getCardSize = useMemo(() => {
+    const width = window.innerWidth;
+    if (width < 600) return { card: 1.8, logo: 1.5, text: 0.15 };
+    if (width < 1024) return { card: 2.0, logo: 1.7, text: 0.18 };
+    return { card: 2.5, logo: 2.0, text: 0.2 };
+  }, []);
   
   // Random rotation speed for idle animation
   const rotSpeed = useMemo(() => Math.random() * 0.01 + 0.002, []);
@@ -131,6 +152,19 @@ function ScreenLogo({ texture, name, position, isActive }: ScreenLogoProps) {
     }
   });
   
+  // Add window resize handler
+  useEffect(() => {
+    const handleResize = () => {
+      // Force re-render on resize to update card sizes
+      if (groupRef.current) {
+        groupRef.current.scale.set(1, 1, 1);
+      }
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
   return (
     <group 
       ref={groupRef} 
@@ -141,7 +175,7 @@ function ScreenLogo({ texture, name, position, isActive }: ScreenLogoProps) {
       <Billboard follow={true}>
         {/* Card backing */}
         <mesh receiveShadow castShadow>
-          <boxGeometry args={[2.5, 2.5, 0.1]} />
+          <boxGeometry args={[getCardSize.card, getCardSize.card, 0.1]} />
           <meshStandardMaterial 
             color={hovered ? "#ffffff" : "#f5f5f5"} 
             roughness={0.2} 
@@ -151,7 +185,7 @@ function ScreenLogo({ texture, name, position, isActive }: ScreenLogoProps) {
         </mesh>
         
         {/* Logo on front */}
-        <Plane args={[2, 2]} position={[0, 0.3, 0.06]} ref={meshRef}>
+        <Plane args={[getCardSize.logo, getCardSize.logo]} position={[0, 0.3, 0.06]} ref={meshRef}>
           <meshBasicMaterial 
             map={texture} 
             transparent 
@@ -162,7 +196,7 @@ function ScreenLogo({ texture, name, position, isActive }: ScreenLogoProps) {
         {/* Tech name */}
         <Text
           position={[0, -1, 0.06]}
-          fontSize={0.2}
+          fontSize={getCardSize.text}
           color={hovered ? "#000000" : "#555555"}
           anchorX="center"
           anchorY="middle"

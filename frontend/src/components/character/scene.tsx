@@ -12,6 +12,7 @@ import {
 } from "./utils/mouseUtils";
 import setAnimations from "./utils/animationUtils";
 import { setProgress } from "../Loading";
+import "../styles/Character.css";
 
 const Scene = () => {
   const canvasDiv = useRef<HTMLDivElement | null>(null);

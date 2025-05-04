@@ -1,0 +1,51 @@
+/* TechStack component responsive styles */
+.techstack {
+  position: relative;
+  width: 100%;
+  z-index: 1;
+}
+
+.techstack h2 {
+  font-size: 25px;
+  text-transform: uppercase;
+  letter-spacing: 7px;
+  font-weight: 400;
+  color: var(--accentColor);
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.tech-canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+}
+
+/* Ensure canvas is visible on all devices */
+canvas {
+  display: block !important;
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+  .techstack h2 {
+    font-size: 20px;
+    letter-spacing: 5px;
+  }
+  
+  .tech-canvas {
+    height: 500px !important;
+  }
+}
+
+@media screen and (min-width: 1600px) {
+  .tech-canvas {
+    height: 900px !important;
+  }
+}
+
+/* Fix for tech stack appearing beneath other content */
+#tech-stack {
+  position: relative;
+  z-index: 2;
+}
