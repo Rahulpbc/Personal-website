@@ -140,10 +140,17 @@ const TechStack = () => {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY || document.documentElement.scrollTop;
-      const threshold = document
-        .getElementById("work")!
-        .getBoundingClientRect().top;
-      setIsActive(scrollY > threshold);
+      const workElement = document.getElementById("work");
+      
+      if (workElement) {
+        const threshold = workElement.getBoundingClientRect().top;
+        setIsActive(scrollY > threshold);
+      } else {
+        // Fallback activation based on scroll position if work element not found
+        // Typically activate after scrolling 30% down the page
+        const activationPoint = window.innerHeight * 0.3;
+        setIsActive(scrollY > activationPoint);
+      }
     };
     document.querySelectorAll(".header a").forEach((elem) => {
       const element = elem as HTMLAnchorElement;
@@ -209,7 +216,7 @@ const TechStack = () => {
           ))}
         </Physics>
         <Environment
-          preset="city"
+          files="/models/char_enviorment.hdr"
           environmentIntensity={0.5}
           environmentRotation={[0, 4, 2]}
         />

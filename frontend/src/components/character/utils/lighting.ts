@@ -19,6 +19,15 @@ const setLighting = (scene: THREE.Scene) => {
   initialPointLight.castShadow = true;
   scene.add(initialPointLight);
 
+  new RGBELoader()
+    .setPath("/models/")
+    .load("char_enviorment.hdr", function (texture) {
+      texture.mapping = THREE.EquirectangularReflectionMapping;
+      scene.environment = texture;
+      scene.environmentIntensity = 0;
+      scene.environmentRotation.set(5.76, 85.85, 1);
+    });
+
   // Skip HDR loading completely and use standard lighting instead
   console.log("Using standard lighting setup instead of HDR");
   
