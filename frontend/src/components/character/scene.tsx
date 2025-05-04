@@ -60,8 +60,18 @@ const Scene = () => {
 
     // Set up camera
     const camera = new THREE.PerspectiveCamera(14.5, aspect, 0.1, 1000);
-    camera.position.z = 10;
     camera.position.set(0, 13.1, 24.7);
+    // Ensure the camera is looking at the character's position so the model is within the view frustum
+    camera.lookAt(new THREE.Vector3(0, 8, 0));
+    
+    // Expose scene and camera for quick debugging in DevTools console
+    // (e.g., you can type `sceneRef` or `cameraRef` to inspect)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    window.sceneRef = scene;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    window.cameraRef = camera;
     camera.zoom = 1.1;
     camera.updateProjectionMatrix();
 
