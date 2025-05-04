@@ -100,6 +100,8 @@ function SphereGeo({
     api.current?.applyImpulse(impulse, true);
   });
 
+  const logoPlaneSize = scale * 2; // Plane size based on radius and scale
+
   return (
     <RigidBody
       linearDamping={0.75}
@@ -115,14 +117,29 @@ function SphereGeo({
         position={[0, 0, 1.2 * scale]}
         args={[0.15 * scale, 0.275 * scale]}
       />
-      <mesh
-        castShadow
-        receiveShadow
-        scale={scale}
-        geometry={sphereGeometry}
-        material={material}
-        rotation={[0.3, 1, 1]}
-      />
+      <group>
+        {/* White Sphere */}
+        <mesh
+          castShadow
+          receiveShadow
+          scale={scale}
+          geometry={sphereGeometry}
+          material={new THREE.MeshStandardMaterial({ color: "white", roughness: 0.3, metalness: 0.2 })}
+          rotation={[0.3, 1, 1]}
+        />
+
+        {/* Logo Plane 1 (Front) */}
+        <mesh position={[0, 0, scale + 0.01]} rotation={[0, 0, 0]}> {/* Slightly offset from sphere surface */}
+          <planeGeometry args={[logoPlaneSize, logoPlaneSize]} />
+          <meshBasicMaterial map={material.map} side={THREE.DoubleSide} transparent={true} alphaTest={0.5} />
+        </mesh>
+
+        {/* Logo Plane 2 (Back) */}
+        <mesh position={[0, 0, -(scale + 0.01)]} rotation={[0, Math.PI, 0]}> {/* Rotate 180 degrees to face outwards */}
+          <planeGeometry args={[logoPlaneSize, logoPlaneSize]} />
+          <meshBasicMaterial map={material.map} side={THREE.DoubleSide} transparent={true} alphaTest={0.5} />
+        </mesh>
+      </group>
     </RigidBody>
   );
 }

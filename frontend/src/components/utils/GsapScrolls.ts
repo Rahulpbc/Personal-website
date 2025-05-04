@@ -99,20 +99,10 @@ export function setCharTimeline(
       if (screenLight && screenLight.material) {
         tl2Setup.to(screenLight.material, { opacity: 1, duration: 0.8, delay: 4.5 }, 0);
       }
-      
-      // Removed animation for .what-box-in to fix GSAP errors
-
-      // Removed animations that were targeting the removed WhatIDo component
     }
   } else {
     if (character) {
-      const tM2 = gsap.timeline({
-        scrollTrigger: {
-          trigger: ".what-box-in",
-          start: "top 70%",
-          end: "bottom top",
-        },
-      });
+      // Removed GSAP animation targeting the non-existent '.what-box-in' element
     }
   }
 }
