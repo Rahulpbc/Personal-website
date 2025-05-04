@@ -1,0 +1,30 @@
+/* Character wrapper styles to control visibility based on screen size */
+.character-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* Style for mobile view */
+.character-wrapper.mobile-view {
+  display: none !important;
+}
+
+/* Style for desktop view */
+.character-wrapper.desktop-view {
+  display: block !important;
+}
+
+/* Media queries for responsive behavior */
+@media screen and (max-width: 1024px) {
+  .character-wrapper {
+    display: none !important;
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  .character-wrapper {
+    display: block !important;
+  }
+}

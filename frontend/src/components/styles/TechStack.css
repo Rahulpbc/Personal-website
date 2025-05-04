@@ -2,7 +2,10 @@
 .techstack {
   position: relative;
   width: 100%;
-  z-index: 1;
+  z-index: 10; /* Higher z-index to ensure visibility */
+  margin: 50px 0; /* Add spacing */
+  min-height: 600px; /* Ensure minimum height */
+  display: block !important;
 }
 
 .techstack h2 {
@@ -13,12 +16,16 @@
   color: var(--accentColor);
   margin-bottom: 20px;
   text-align: center;
+  display: block !important;
 }
 
 .tech-canvas {
   width: 100% !important;
-  height: 100% !important;
+  height: 600px !important; /* Fixed height */
   display: block !important;
+  position: relative !important;
+  z-index: 10;
+  overflow: visible;
 }
 
 /* Ensure canvas is visible on all devices */

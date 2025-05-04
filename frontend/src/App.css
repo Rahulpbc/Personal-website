@@ -9,6 +9,34 @@
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
 }
+
+/* Force visibility of 3D elements */
+.force-visible {
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: block !important;
+  z-index: 10 !important;
+}
+
+/* Ensure character container is always visible */
+.character-container {
+  visibility: visible !important;
+  display: block !important;
+  z-index: 10 !important;
+}
+
+/* Global canvas visibility */
+canvas {
+  display: block !important;
+  visibility: visible !important;
+}
+
+/* Ensure tech stack is visible */
+#tech-stack {
+  display: block !important;
+  visibility: visible !important;
+  z-index: 10 !important;
+}
 @media only screen and (max-width: 1600px) {
   .section-container {
     width: 1200px;

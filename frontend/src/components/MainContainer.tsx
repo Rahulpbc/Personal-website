@@ -9,6 +9,9 @@ import SocialIcons from "./SocialIcons";
 import TechStackFallback from "./TechStackFallback";
 import setSplitText from "./utils/splitText";
 
+// Import character wrapper styles
+import "./styles/CharacterWrapper.css";
+
 const TechStack = lazy(() => import("./TechStack"));
 
 const MainContainer = ({ children }: PropsWithChildren) => {
@@ -33,19 +36,20 @@ const MainContainer = ({ children }: PropsWithChildren) => {
       <Cursor />
       <Navbar />
       <SocialIcons />
-      {isDesktopView && children}
+      {/* Always include the character in DOM, but CSS will control visibility */}
+      <div className={`character-wrapper ${isDesktopView ? 'desktop-view' : 'mobile-view'}`}>
+        {children}
+      </div>
       <div id="smooth-wrapper">
         <div id="smooth-content">
           <div className="container-main">
-            <Landing>{!isDesktopView && children}</Landing>
+            <Landing />
             <About />
             <Career />
-            {isDesktopView && (
-              <Suspense fallback={<TechStackFallback />}>
-                <TechStack />
-              </Suspense>
-            )}
-            {!isDesktopView && <TechStackFallback />}
+            {/* Always render the real TechStack with fallback */}
+            <Suspense fallback={<TechStackFallback />}>
+              <TechStack />
+            </Suspense>
             <Contact />
           </div>
         </div>

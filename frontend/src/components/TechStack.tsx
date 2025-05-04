@@ -74,23 +74,28 @@ const textures: TechItem[] = techData.map(tech => {
 
 // Calculate responsive positions based on screen size
 const createPositions = (count: number): [number, number, number][] => {
-  // Adjust radius based on screen width for responsiveness
   const getResponsiveRadius = () => {
     const width = window.innerWidth;
-    if (width < 600) return 8;  // Mobile
-    if (width < 1024) return 10; // Tablet
-    if (width < 1600) return 12; // Laptop
-    return 15; // Large desktop
+    if (width < 600) return 6;  // Mobile - smaller radius for better visibility
+    if (width < 1024) return 8; // Tablet - medium radius
+    return 12; // Desktop - larger radius
+  };
+  
+  const getResponsiveHeight = () => {
+    const width = window.innerWidth;
+    if (width < 600) return 6;  // Less vertical spread on mobile
+    if (width < 1024) return 8; // Medium vertical spread on tablet
+    return 10; // Larger vertical spread on desktop
   };
   
   const radius = getResponsiveRadius();
-  console.log(`Using responsive radius: ${radius} for screen width: ${window.innerWidth}`);
+  const heightRange = getResponsiveHeight();
   
   return Array.from({ length: count }, (_, i) => {
     const angle = (i / count) * Math.PI * 2; // Distribute around a circle
-    const x = Math.cos(angle) * radius * Math.random() * 0.5 + radius * Math.cos(angle);
-    const y = (Math.random() - 0.5) * 10; // Random height variation
-    const z = Math.sin(angle) * radius * Math.random() * 0.5 + radius * Math.sin(angle);
+    const x = Math.cos(angle) * radius;
+    const y = (Math.random() - 0.5) * heightRange; // Random height variation with responsive range
+    const z = Math.sin(angle) * radius;
     return [x, y, z];
   });
 };
@@ -239,10 +244,14 @@ const TechStack = () => {
       <h2>My Techstack</h2>
       <Canvas
         shadows
-        gl={{ alpha: true, stencil: false, depth: false, antialias: false }}
+        gl={{ alpha: true, stencil: false, depth: true, antialias: true, preserveDrawingBuffer: true }}
         camera={{ position: [0, 0, 20], fov: 32.5, near: 1, far: 100 }}
-        onCreated={(state) => (state.gl.toneMappingExposure = 1.5)}
+        onCreated={(state) => {
+          state.gl.toneMappingExposure = 1.5;
+          console.log("TechStack Canvas created successfully");
+        }}
         className="tech-canvas"
+        resize={{ scroll: false }}
       >
         <ambientLight intensity={1.5} />
         <spotLight 

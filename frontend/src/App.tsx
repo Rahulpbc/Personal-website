@@ -1,13 +1,15 @@
 import { lazy, Suspense, useEffect } from "react";
 import "./App.css";
 import ErrorBoundary from "./components/ErrorBoundary";
-
-// Import GSAP initialization function
+import { initialFX } from "./components/utils/initialFX";
 import { initializeGsap } from "./components/utils/GsapScrolls";
-
-const CharacterModel = lazy(() => import("./components/character"));
-const MainContainer = lazy(() => import("./components/MainContainer"));
+import MainContainer from "./components/MainContainer";
 import { LoadingProvider } from "./context/LoadingProvider";
+import Work from "./components/Work";
+import Loading from "./components/Loading";
+
+// Eagerly import the character model for better reliability
+const CharacterModel = lazy(() => import("./components/character"));
 
 // Custom error fallback component with minimal styling
 const ErrorFallback = () => (
@@ -46,7 +48,49 @@ const App = () => {
   // Initialize GSAP and clear any stale animations when the app mounts
   useEffect(() => {
     console.log("App mounted, initializing GSAP...");
+    // Initialize GSAP animations
     initializeGsap();
+    // Run the initialFX function to set up initial animations
+    if (initialFX) initialFX();
+    
+    // Only perform 3D-related operations on desktop
+    const isDesktop = window.innerWidth > 1024;
+    
+    // Force tech stack to be visible on all devices, but character only on desktop
+    const forceRepaint = () => {
+      console.log("Forcing repaint of elements");
+      
+      // Only handle character on desktop
+      if (isDesktop) {
+        const characterContainer = document.querySelector(".character-container");
+        if (characterContainer) {
+          characterContainer.classList.add("force-visible");
+          console.log("Character container made visible");
+        }
+      }
+      
+      // Force tech stack visibility on all devices
+      const techStack = document.getElementById("tech-stack");
+      if (techStack) {
+        techStack.style.visibility = 'visible';
+        techStack.style.opacity = '1';
+        console.log("Tech stack made visible");
+      }
+      
+      // Force tech stack canvas to be visible on all devices
+      document.querySelectorAll('#tech-stack canvas').forEach(canvas => {
+        // Cast to HTMLElement to access style property
+        const canvasElement = canvas as HTMLElement;
+        canvasElement.style.display = 'block';
+        canvasElement.style.visibility = 'visible';
+      });
+    };
+    
+    // Run the repaint after components have mounted
+    setTimeout(forceRepaint, 1000);
+    // Run again after loading is likely complete
+    setTimeout(forceRepaint, 3000);
+    
     // Clean up on unmount
     return () => {
       console.log("App unmounting, cleaning up GSAP...");

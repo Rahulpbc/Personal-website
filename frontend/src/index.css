@@ -91,13 +91,30 @@ body {
   flex-wrap: nowrap;
 }
 
+/* Modify global styles to ensure proper rendering of 3D components */
+
+/* Enable 3D element visibility */
+canvas {
+  display: block !important;
+}
+
+/* Fix stacking context issues */
+#smooth-wrapper, #smooth-content {
+  z-index: 1;
+  position: relative;
+}
+
+/* Updated techstack styles */
 .techstack {
   width: 100%;
   position: relative;
-  height: var(--vh);
+  min-height: 600px;
+  height: auto !important;
   margin: auto;
   margin-top: 50px;
-  margin-bottom: -100px;
+  margin-bottom: 50px;
+  display: block !important;
+  z-index: 5;
 }
 
 .techstack h2 {

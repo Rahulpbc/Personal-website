@@ -214,9 +214,63 @@ const Scene = () => {
     }
   }, []);
 
+  // Handle visibility based on screen size and ensure proper rendering
+  useEffect(() => {
+    // Check if we're on desktop
+    const isDesktop = window.innerWidth > 1024;
+    
+    // Only proceed with character initialization on desktop
+    if (!isDesktop) {
+      console.log('Mobile device detected, not initializing character');
+      return;
+    }
+    
+    // Ensure the container is visible
+    if (canvasDiv.current) {
+      canvasDiv.current.style.visibility = 'visible';
+      canvasDiv.current.style.display = 'block';
+    }
+    
+    // Force a repaint to ensure proper rendering
+    const timer = setTimeout(() => {
+      if (canvasDiv.current) {
+        console.log('Ensuring character container visibility');
+        // Add a force-visible class
+        canvasDiv.current.classList.add('force-visible');
+        
+        // Force a repaint by briefly hiding and showing
+        canvasDiv.current.style.opacity = '0';
+        setTimeout(() => {
+          if (canvasDiv.current) {
+            canvasDiv.current.style.opacity = '1';
+          }
+        }, 50);
+      }
+    }, 300);
+    
+    // Handle window resize
+    const handleResize = () => {
+      const newIsDesktop = window.innerWidth > 1024;
+      if (canvasDiv.current) {
+        if (newIsDesktop) {
+          canvasDiv.current.style.display = 'block';
+        } else {
+          canvasDiv.current.style.display = 'none';
+        }
+      }
+    };
+    
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <>
-      <div className="character-container">
+      <div className="character-container" id="character-container">
         <div className="character-model" ref={canvasDiv}>
           <div className="character-rim"></div>
           <div className="character-hover" ref={hoverDivRef}></div>

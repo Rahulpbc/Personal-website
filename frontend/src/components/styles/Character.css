@@ -4,16 +4,33 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  z-index: -1;
+  height: 100vh; /* Use viewport height */
+  z-index: 1; /* Higher z-index to ensure visibility */
   pointer-events: none;
+  overflow: visible;
+  display: none; /* Hidden by default */
+}
+
+/* Only show on desktop */
+@media screen and (min-width: 1025px) {
+  .character-container {
+    display: block; /* Show on desktop */
+  }
 }
 
 .character-model {
   width: 100%;
   height: 100%;
-  display: block;
-  overflow: hidden;
+  display: block !important; /* Force display */
+  overflow: visible;
+  position: relative;
+}
+
+/* Force visibility class for JavaScript control */
+.force-visible {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
 }
 
 .character-rim {
