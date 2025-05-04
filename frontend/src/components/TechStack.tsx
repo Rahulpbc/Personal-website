@@ -10,7 +10,6 @@ import {
   CylinderCollider,
   RapierRigidBody,
 } from "@react-three/rapier";
-
 // Create a texture loader with proper error handling
 const textureLoader = new THREE.TextureLoader();
 textureLoader.crossOrigin = 'anonymous';
@@ -33,39 +32,12 @@ const imageUrls = [
   "/images/grafana.png",
   "/images/redis.png",
 ];
+const textures = imageUrls.map((url) => textureLoader.load(url));
 
-// Load textures with error handling
-const textures = imageUrls.map((url) => {
-  console.log(`Attempting to load texture: ${url}`);
-  const texture = textureLoader.load(
-    url,
-    (loadedTexture) => {
-      console.log(`Successfully loaded texture: ${url}`, loadedTexture);
-    },
-    (progress) => {
-      console.log(`Loading texture progress for ${url}:`, progress);
-    },
-    (error) => {
-      console.error(`Error loading texture ${url}:`, error);
-    }
-  );
-  
-  // Configure texture for proper display - don't stretch over entire sphere
-  texture.colorSpace = THREE.SRGBColorSpace;
-  texture.wrapS = THREE.ClampToEdgeWrapping;
-  texture.wrapT = THREE.ClampToEdgeWrapping;
-  texture.minFilter = THREE.LinearFilter;
-  texture.magFilter = THREE.LinearFilter;
-  
-  return texture;
-});
+const sphereGeometry = new THREE.SphereGeometry(1, 28, 28);
 
-// High-quality sphere geometry for better appearance
-const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
-
-// Create spheres with better spacing
-const spheres = [...Array(15)].map(() => ({
-  scale: [0.8, 0.9, 1, 1.1, 1.2][Math.floor(Math.random() * 5)],
+const spheres = [...Array(30)].map(() => ({
+  scale: [0.7, 1, 0.8, 1, 1][Math.floor(Math.random() * 5)],
 }));
 
 type SphereProps = {
@@ -102,8 +74,6 @@ function SphereGeo({
     api.current?.applyImpulse(impulse, true);
   });
 
-  // No logo plane size needed anymore as we're mapping directly to the sphere
-
   return (
     <RigidBody
       linearDamping={0.75}
@@ -119,7 +89,6 @@ function SphereGeo({
         position={[0, 0, 1.2 * scale]}
         args={[0.15 * scale, 0.275 * scale]}
       />
-      {/* Single solid sphere with logo */}
       <mesh
         castShadow
         receiveShadow
@@ -169,26 +138,13 @@ const TechStack = () => {
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    // Create a reference to the techstack element
-    const techstackRef = document.querySelector('.techstack');
-    
-    // Function to check if element is in viewport
-    const isInViewport = (element: Element) => {
-      if (!element) return false;
-      const rect = element.getBoundingClientRect();
-      return (
-        rect.top <= (window.innerHeight || document.documentElement.clientHeight) &&
-        rect.bottom >= 0
-      );
-    };
-    
     const handleScroll = () => {
-      if (techstackRef) {
-        setIsActive(isInViewport(techstackRef));
-      }
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+      const threshold = document
+        .getElementById("work")!
+        .getBoundingClientRect().top;
+      setIsActive(scrollY > threshold);
     };
-    
-    // Handle navigation clicks
     document.querySelectorAll(".header a").forEach((elem) => {
       const element = elem as HTMLAnchorElement;
       element.addEventListener("click", () => {
@@ -200,34 +156,23 @@ const TechStack = () => {
         }, 1000);
       });
     });
-    
-    // Initial check and scroll listener
-    handleScroll();
     window.addEventListener("scroll", handleScroll);
-    
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
   const materials = useMemo(() => {
     return textures.map(
-      (texture) => {
-        // Create a material with properly sized and positioned logo
-        const material = new THREE.MeshPhysicalMaterial({
+      (texture) =>
+        new THREE.MeshPhysicalMaterial({
           map: texture,
-          color: '#ffffff',  // White base color
           emissive: "#ffffff",
           emissiveMap: texture,
-          emissiveIntensity: 0.3, // Subtle emissive effect
-          metalness: 0.4,
-          roughness: 0.6,
-          clearcoat: 0.4,
-          transparent: false,
-          side: THREE.FrontSide,
-        });
-        
-        return material;
-      }
+          emissiveIntensity: 0.3,
+          metalness: 0.5,
+          roughness: 1,
+          clearcoat: 0.1,
+        })
     );
   }, []);
 
@@ -258,14 +203,13 @@ const TechStack = () => {
             <SphereGeo
               key={i}
               {...props}
-              material={materials[i % materials.length]} // Use sequential logos instead of random
+              material={materials[Math.floor(Math.random() * materials.length)]}
               isActive={isActive}
             />
           ))}
         </Physics>
-        {/* Use a preset environment instead of trying to load a custom HDR file */}
         <Environment
-          preset="city"
+          files="/frontend/public/models/char_enviorment.hdr"
           environmentIntensity={0.5}
           environmentRotation={[0, 4, 2]}
         />
