@@ -15,23 +15,35 @@ const setCharacter = (
   const loadCharacter = (): Promise<GLTF | null> => {
     console.log("Starting character model loading process...");
     
+    // More comprehensive paths to try loading the model from
+    const baseUrl = window.location.origin;
     const possiblePaths = [
       "/models/character.glb",
-      `${window.location.origin}/models/character.glb`,
-      "/public/models/character.glb"
+      `${baseUrl}/models/character.glb`,
+      "/public/models/character.glb",
+      `${baseUrl}/public/models/character.glb`,
+      "./models/character.glb",
+      "../models/character.glb",
+      "../../models/character.glb",
+      "../public/models/character.glb"
     ];
     
     return new Promise<GLTF | null>((resolve) => {
+      // Clear console to better see loading logs
+      console.clear();
+      console.log("Base URL:", baseUrl);
+      
       // Configure DRACO with absolute path to ensure it works
-      const dracoLoaderPath = window.location.origin + "/draco/";
+      const dracoLoaderPath = baseUrl + "/draco/";
       dracoLoader.setDecoderPath(dracoLoaderPath);
       
-      console.log("Updated DRACO decoder path to:", dracoLoaderPath);
+      console.log("DRACO decoder path set to:", dracoLoaderPath);
       
       // Try loading from each path until one works
       const tryNextPath = (pathIndex: number): void => {
         if (pathIndex >= possiblePaths.length) {
           console.error("Failed to load character model from all possible paths");
+          console.log("Please check that the character.glb file exists in the public/models directory");
           resolve(null);
           return;
         }
@@ -39,10 +51,16 @@ const setCharacter = (
         const currentPath = possiblePaths[pathIndex];
         console.log(`Attempting to load model from: ${currentPath}`);
         
-        // Attempt to load the model
+        // Attempt to load the model with a timeout
+        const loadTimeout = setTimeout(() => {
+          console.warn(`Loading timeout for path: ${currentPath}`);
+          tryNextPath(pathIndex + 1);
+        }, 5000); // 5 second timeout
+        
         loader.load(
           currentPath,
           (gltf) => {
+            clearTimeout(loadTimeout);
             if (!gltf || !gltf.scene) {
               console.error("Loaded model has no scene");
               tryNextPath(pathIndex + 1);

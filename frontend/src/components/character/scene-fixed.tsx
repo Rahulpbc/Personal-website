@@ -183,18 +183,7 @@ const Scene = () => {
     // Handle window resize
     const handleWindowResize = () => {
       if (canvasDiv.current) {
-        // Only pass character to handleResize if it exists
-        if (character) {
-          handleResize(renderer, camera, { current: canvasDiv.current }, character);
-        } else {
-          // Simplified resize handling without character
-          const rect = canvasDiv.current.getBoundingClientRect();
-          const width = rect.width;
-          const height = rect.height;
-          camera.aspect = width / height;
-          camera.updateProjectionMatrix();
-          renderer.setSize(width, height);
-        }
+        handleResize(renderer, camera, { current: canvasDiv.current }, character);
       }
     };
     
