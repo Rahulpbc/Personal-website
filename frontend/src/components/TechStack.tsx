@@ -58,8 +58,10 @@ const textures = imageUrls.map((url) => {
   return texture;
 });
 
-// Use a single sphere geometry for all tech logos
-const sphereGeometry = new THREE.SphereGeometry(1, 28, 28);
+// Create a flat card geometry for better logo visibility
+const cardGeometry = new THREE.BoxGeometry(2, 2, 0.2);
+// Keep a reference to the original sphere geometry for collision detection
+const collisionGeometry = new THREE.SphereGeometry(1, 8, 8);
 
 const spheres = [...Array(30)].map(() => ({
   scale: [0.7, 1, 0.8, 1, 1][Math.floor(Math.random() * 5)],
@@ -73,11 +75,11 @@ type SphereProps = {
   isActive: boolean;
 };
 
-function SphereGeo({
+function LogoCard({
   vec = new THREE.Vector3(),
   scale,
   r = THREE.MathUtils.randFloatSpread,
-  material, // This will now be an array of materials
+  material,
   isActive,
 }: SphereProps) {
   const api = useRef<RapierRigidBody | null>(null);
@@ -114,14 +116,20 @@ function SphereGeo({
         position={[0, 0, 1.2 * scale]}
         args={[0.15 * scale, 0.275 * scale]}
       />
-      <mesh
-        castShadow
-        receiveShadow
-        scale={scale}
-        geometry={sphereGeometry}
-        material={material}
-        rotation={[0.3, 1, 1]}
-      />
+      <group rotation={[0, r(Math.PI), 0]}>
+        <mesh
+          castShadow
+          receiveShadow
+          scale={scale}
+          geometry={cardGeometry}
+          material={material}
+          // Apply a slight rotation for better visibility
+          rotation={[0.1, 0, 0]}
+        >
+          {/* Add a subtle glow effect */}
+          <meshBasicMaterial attach="material-back" color="#ffffff" opacity={0.1} transparent={true} />  
+        </mesh>
+      </group>
     </RigidBody>
   );
 }
@@ -206,19 +214,28 @@ const TechStack = () => {
   const materials = useMemo(() => {
     return textures.map(
       (texture) => {
-        // Create a background material for the sphere
+        // Create an optimized material for flat card display
         const material = new THREE.MeshPhysicalMaterial({
           map: texture,
           emissive: "#ffffff",
           emissiveMap: texture,
-          emissiveIntensity: 0.3,
-          metalness: 0.5,
-          roughness: 0.7, // Reduced roughness for better logo visibility
-          clearcoat: 0.3, // Increased clearcoat for better shine
+          emissiveIntensity: 0.2,
+          metalness: 0.3,
+          roughness: 0.4,
+          clearcoat: 0.5,
           transparent: true,
           opacity: 1.0,
-          side: THREE.FrontSide,
+          side: THREE.DoubleSide, // Show logo on both sides
         });
+        
+        // Add a white border/background to make logos stand out
+        material.onBeforeCompile = (shader) => {
+          shader.fragmentShader = shader.fragmentShader.replace(
+            '#include <dithering_fragment>',
+            '#include <dithering_fragment>\n' +
+            'gl_FragColor.rgb = mix(vec3(1.0, 1.0, 1.0), gl_FragColor.rgb, 0.9);'
+          );
+        };
         
         return material;
       }
@@ -249,10 +266,10 @@ const TechStack = () => {
         <Physics gravity={[0, 0, 0]}>
           <Pointer isActive={isActive} />
           {spheres.map((props, i) => (
-            <SphereGeo
+            <LogoCard
               key={i}
               {...props}
-              material={materials[Math.floor(Math.random() * materials.length)]}
+              material={materials[i % materials.length]} // Use sequential logos instead of random
               isActive={isActive}
             />
           ))}

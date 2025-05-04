@@ -27,15 +27,7 @@ export function setCharTimeline(
       invalidateOnRefresh: true,
     },
   });
-  const tl3 = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".whatIDO",
-      start: "top top",
-      end: "bottom top",
-      scrub: true,
-      invalidateOnRefresh: true,
-    },
-  });
+  // Removed tl3 timeline that was targeting the removed WhatIDo component
   let screenLight: any, monitor: any;
   character?.children.forEach((object: any) => {
     if (object.name === "Plane004") {
@@ -110,25 +102,7 @@ export function setCharTimeline(
       
       // Removed animation for .what-box-in to fix GSAP errors
 
-      tl3
-        .fromTo(
-          ".character-model",
-          { y: "0%" },
-          { y: "-100%", duration: 4, ease: "none", delay: 1 },
-          0
-        )
-        .fromTo(".whatIDO", { y: 0 }, { y: "15%", duration: 2 }, 0)
-        .to(character.rotation, { x: -0.04, duration: 2, delay: 1 }, 0);
-      if (monitor) {
-        tl3.to(
-          monitor.material,
-          {
-            opacity: 1,
-            duration: 0.1,
-          },
-          0
-        );
-      }
+      // Removed animations that were targeting the removed WhatIDo component
     }
   } else {
     if (character) {
