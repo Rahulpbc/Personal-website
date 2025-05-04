@@ -100,7 +100,8 @@ function SphereGeo({
     api.current?.applyImpulse(impulse, true);
   });
 
-  const logoPlaneSize = scale * 2; // Plane size based on radius and scale
+  // Reduce logo plane size to fit within sphere boundary (70% of sphere diameter)
+  const logoPlaneSize = scale * 1.4; // 70% of sphere diameter (scale * 2)
 
   return (
     <RigidBody
@@ -128,16 +129,28 @@ function SphereGeo({
           rotation={[0.3, 1, 1]}
         />
 
-        {/* Logo Plane 1 (Front) */}
-        <mesh position={[0, 0, scale + 0.01]} rotation={[0, 0, 0]}> {/* Slightly offset from sphere surface */}
+        {/* Logo Plane 1 (Front) - positioned on the surface of the sphere */}
+        <mesh position={[0, 0, scale * 0.99]} rotation={[0, 0, 0]}>
           <planeGeometry args={[logoPlaneSize, logoPlaneSize]} />
-          <meshBasicMaterial map={material.map} side={THREE.DoubleSide} transparent={true} alphaTest={0.5} />
+          <meshBasicMaterial 
+            map={material.map} 
+            side={THREE.DoubleSide} 
+            transparent={true} 
+            alphaTest={0.5}
+            depthWrite={false} // Prevent z-fighting with sphere
+          />
         </mesh>
 
-        {/* Logo Plane 2 (Back) */}
-        <mesh position={[0, 0, -(scale + 0.01)]} rotation={[0, Math.PI, 0]}> {/* Rotate 180 degrees to face outwards */}
+        {/* Logo Plane 2 (Back) - positioned on the opposite side */}
+        <mesh position={[0, 0, -scale * 0.99]} rotation={[0, Math.PI, 0]}>
           <planeGeometry args={[logoPlaneSize, logoPlaneSize]} />
-          <meshBasicMaterial map={material.map} side={THREE.DoubleSide} transparent={true} alphaTest={0.5} />
+          <meshBasicMaterial 
+            map={material.map} 
+            side={THREE.DoubleSide} 
+            transparent={true} 
+            alphaTest={0.5}
+            depthWrite={false} // Prevent z-fighting with sphere
+          />
         </mesh>
       </group>
     </RigidBody>

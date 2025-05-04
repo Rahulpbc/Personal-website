@@ -1,6 +1,9 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import "./App.css";
 import ErrorBoundary from "./components/ErrorBoundary";
+
+// Import GSAP initialization function
+import { initializeGsap } from "./components/utils/GsapScrolls";
 
 const CharacterModel = lazy(() => import("./components/character"));
 const MainContainer = lazy(() => import("./components/MainContainer"));
@@ -40,6 +43,17 @@ const ErrorFallback = () => (
 );
 
 const App = () => {
+  // Initialize GSAP and clear any stale animations when the app mounts
+  useEffect(() => {
+    console.log("App mounted, initializing GSAP...");
+    initializeGsap();
+    // Clean up on unmount
+    return () => {
+      console.log("App unmounting, cleaning up GSAP...");
+      // ScrollTrigger.getAll().forEach(t => t.kill());
+    };
+  }, []);
+
   return (
     <ErrorBoundary fallback={<ErrorFallback />}>
       <LoadingProvider>
