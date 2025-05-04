@@ -108,29 +108,7 @@ export function setCharTimeline(
         tl2Setup.to(screenLight.material, { opacity: 1, duration: 0.8, delay: 4.5 }, 0);
       }
       
-      // Continue with DOM animations
-      tl2Setup.fromTo(
-        ".what-box-in",
-        { display: "none" },
-        { display: "flex", duration: 0.1, delay: 6 },
-        0
-      );
-      
-      // Only animate monitor position if it exists
-      if (monitor && monitor.position) {
-        tl2Setup.fromTo(
-          monitor.position,
-          { y: -10, z: 2 },
-          { y: 0, z: 0, delay: 1.5, duration: 3 },
-          0
-        )
-        .fromTo(
-          ".character-rim",
-          { opacity: 1, scaleX: 1.4 },
-          { opacity: 0, scale: 0, y: "-70%", duration: 5, delay: 2 },
-          0.3
-        );
-      }
+      // Removed animation for .what-box-in to fix GSAP errors
 
       tl3
         .fromTo(
@@ -141,6 +119,16 @@ export function setCharTimeline(
         )
         .fromTo(".whatIDO", { y: 0 }, { y: "15%", duration: 2 }, 0)
         .to(character.rotation, { x: -0.04, duration: 2, delay: 1 }, 0);
+      if (monitor) {
+        tl3.to(
+          monitor.material,
+          {
+            opacity: 1,
+            duration: 0.1,
+          },
+          0
+        );
+      }
     }
   } else {
     if (character) {
@@ -151,12 +139,6 @@ export function setCharTimeline(
           end: "bottom top",
         },
       });
-      // Check if element exists before animating
-      if (document.querySelector(".what-box-in")) {
-        tM2.to(".what-box-in", { display: "flex", duration: 0.1, delay: 0 }, 0);
-      } else {
-        console.log("Element .what-box-in not found, skipping animation");
-      }
     }
   }
 }
