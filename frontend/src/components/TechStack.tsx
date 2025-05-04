@@ -50,37 +50,18 @@ const textures = imageUrls.map((url) => {
     }
   );
   
-  // Configure texture for proper spherical mapping
+  // Configure texture for proper display - don't stretch over entire sphere
   texture.colorSpace = THREE.SRGBColorSpace;
   texture.wrapS = THREE.ClampToEdgeWrapping;
   texture.wrapT = THREE.ClampToEdgeWrapping;
-  texture.minFilter = THREE.LinearFilter; // Better quality for logos
+  texture.minFilter = THREE.LinearFilter;
   texture.magFilter = THREE.LinearFilter;
   
   return texture;
 });
 
-// Create custom hemisphere geometries for front and back logo placement
-const sphereSegments = 32;
-const frontHemisphereGeometry = new THREE.SphereGeometry(
-  1,                   // radius
-  sphereSegments,      // widthSegments
-  sphereSegments,      // heightSegments
-  0,                   // phiStart
-  Math.PI,             // phiLength (half a sphere - front hemisphere)
-  0,                   // thetaStart
-  Math.PI              // thetaLength (full vertical sweep)
-);
-
-const backHemisphereGeometry = new THREE.SphereGeometry(
-  1,                   // radius
-  sphereSegments,      // widthSegments
-  sphereSegments,      // heightSegments
-  Math.PI,             // phiStart (start from the back)
-  Math.PI,             // phiLength (half a sphere - back hemisphere)
-  0,                   // thetaStart
-  Math.PI              // thetaLength (full vertical sweep)
-);
+// High-quality sphere geometry for better appearance
+const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
 
 // Create spheres with better spacing
 const spheres = [...Array(15)].map(() => ({
@@ -138,44 +119,15 @@ function SphereGeo({
         position={[0, 0, 1.2 * scale]}
         args={[0.15 * scale, 0.275 * scale]}
       />
-      {/* Group to hold both hemispheres */}
-      <group rotation={[0.3, 1, 1]}>
-        {/* Front hemisphere with logo */}
-        <mesh
-          castShadow
-          receiveShadow
-          scale={scale}
-          geometry={frontHemisphereGeometry}
-        >
-          <meshStandardMaterial 
-            color="white"
-            roughness={0.3} 
-            metalness={0.2}
-            map={material.map}
-            transparent={true}
-            alphaTest={0.1}
-            side={THREE.FrontSide}
-          />
-        </mesh>
-        
-        {/* Back hemisphere with the same logo */}
-        <mesh
-          castShadow
-          receiveShadow
-          scale={scale}
-          geometry={backHemisphereGeometry}
-        >
-          <meshStandardMaterial 
-            color="white"
-            roughness={0.3} 
-            metalness={0.2}
-            map={material.map}
-            transparent={true}
-            alphaTest={0.1}
-            side={THREE.FrontSide}
-          />
-        </mesh>
-      </group>
+      {/* Single solid sphere with logo */}
+      <mesh
+        castShadow
+        receiveShadow
+        scale={scale}
+        geometry={sphereGeometry}
+        material={material}
+        rotation={[0.3, 1, 1]}
+      />
     </RigidBody>
   );
 }
@@ -260,18 +212,13 @@ const TechStack = () => {
   const materials = useMemo(() => {
     return textures.map(
       (texture) => {
-        // Configure texture to only show on the front hemisphere of the sphere
-        texture.offset.set(0.25, 0.25);
-        texture.repeat.set(0.5, 0.5);
-        texture.center.set(0.5, 0.5);
-        
-        // Create a material optimized for spherical logo display
+        // Create a material with properly sized and positioned logo
         const material = new THREE.MeshPhysicalMaterial({
           map: texture,
           color: '#ffffff',  // White base color
           emissive: "#ffffff",
           emissiveMap: texture,
-          emissiveIntensity: 0.3,
+          emissiveIntensity: 0.3, // Subtle emissive effect
           metalness: 0.4,
           roughness: 0.6,
           clearcoat: 0.4,
