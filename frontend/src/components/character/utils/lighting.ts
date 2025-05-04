@@ -67,12 +67,18 @@ const setLighting = (scene: THREE.Scene) => {
       duration: duration,
       ease: ease,
     });
-    gsap.to(".character-rim", {
-      y: "55%",
-      opacity: 1,
-      delay: 0.2,
-      duration: 2,
-    });
+    // Safely animate character-rim only if it exists
+    const characterRim = document.querySelector(".character-rim");
+    if (characterRim) {
+      gsap.to(characterRim, {
+        y: "55%",
+        opacity: 1,
+        delay: 0.2,
+        duration: 2,
+      });
+    } else {
+      console.log("Character rim element not found, skipping animation");
+    }
   }
 
   return { setPointLight, turnOnLights };

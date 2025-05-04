@@ -209,7 +209,7 @@ const TechStack = () => {
           ))}
         </Physics>
         <Environment
-          files="/frontend/public/models/char_enviorment.hdr"
+          preset="city"
           environmentIntensity={0.5}
           environmentRotation={[0, 4, 2]}
         />
