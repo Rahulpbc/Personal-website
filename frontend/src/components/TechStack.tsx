@@ -8,23 +8,34 @@ import { EffectComposer, N8AO } from "@react-three/postprocessing";
 const textureLoader = new THREE.TextureLoader();
 textureLoader.crossOrigin = 'anonymous';
 
+// Helper to get absolute URL for images
+const getImageUrl = (path: string) => {
+  const baseUrl = window.location.origin;
+  // Remove leading slash if present
+  const cleanPath = path.startsWith('/') ? path.substring(1) : path;
+  return `${baseUrl}/${cleanPath}`;
+};
+
+// Log for debugging
+console.log("Base URL for images:", window.location.origin);
+
 // Define image URLs and tech names
 const techData = [
-  { url: "/images/react.png", name: "React" },
-  { url: "/images/java.png", name: "Java" },
-  { url: "/images/python.png", name: "Python" },
-  { url: "/images/express.png", name: "Express" },
-  { url: "/images/postgresql.png", name: "PostgreSQL" },
-  { url: "/images/mysql.png", name: "MySQL" },
-  { url: "/images/typescript.png", name: "TypeScript" },
-  { url: "/images/javascript.png", name: "JavaScript" },
-  { url: "/images/aws.png", name: "AWS" },
-  { url: "/images/azure.png", name: "Azure" },
-  { url: "/images/docker.png", name: "Docker" },
-  { url: "/images/kubernetes.png", name: "Kubernetes" },
-  { url: "/images/prometheus.png", name: "Prometheus" },
-  { url: "/images/grafana.png", name: "Grafana" },
-  { url: "/images/redis.png", name: "Redis" },
+  { url: "images/react.png", name: "React" },
+  { url: "images/java.png", name: "Java" },
+  { url: "images/python.png", name: "Python" },
+  { url: "images/express.png", name: "Express" },
+  { url: "images/postgresql.png", name: "PostgreSQL" },
+  { url: "images/mysql.png", name: "MySQL" },
+  { url: "images/typescript.png", name: "TypeScript" },
+  { url: "images/javascript.png", name: "JavaScript" },
+  { url: "images/aws.png", name: "AWS" },
+  { url: "images/azure.png", name: "Azure" },
+  { url: "images/docker.png", name: "Docker" },
+  { url: "images/kubernetes.png", name: "Kubernetes" },
+  { url: "images/prometheus.png", name: "Prometheus" },
+  { url: "images/grafana.png", name: "Grafana" },
+  { url: "images/redis.png", name: "Redis" },
 ];
 
 // Create texture objects with proper type structure
@@ -33,11 +44,27 @@ interface TechItem {
   name: string;
 }
 
-// Load textures with proper error handling
+// Load textures with proper error handling and absolute URLs
 const textures: TechItem[] = techData.map(tech => {
-  const texture = textureLoader.load(tech.url, undefined, undefined, (error) => {
-    console.error(`Error loading texture ${tech.url}:`, error);
-  });
+  // Use absolute URL
+  const fullUrl = getImageUrl(tech.url);
+  console.log(`Loading texture from: ${fullUrl}`);
+  
+  // Create placeholder texture first
+  const texture = new THREE.Texture();
+  
+  // Load the actual texture
+  const img = new Image();
+  img.onload = () => {
+    texture.image = img;
+    texture.needsUpdate = true;
+    console.log(`Successfully loaded texture for ${tech.name}`);
+  };
+  img.onerror = (err) => {
+    console.error(`Failed to load texture for ${tech.name}:`, err);
+  };
+  img.src = fullUrl;
+  
   return {
     texture, 
     name: tech.name
