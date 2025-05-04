@@ -18,7 +18,6 @@ const TechStackFallback: React.FC = () => {
     { name: 'Prometheus', image: '/images/prometheus.png' },
     { name: 'Grafana', image: '/images/grafana.png' },
     { name: 'Redis', image: '/images/redis.png' },
-    { name: 'Terraform', image: '/images/terraform.png' },
   ];
 
   return (
