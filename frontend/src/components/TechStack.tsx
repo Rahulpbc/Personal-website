@@ -49,17 +49,38 @@ const textures = imageUrls.map((url) => {
       console.error(`Error loading texture ${url}:`, error);
     }
   );
-  // Configure texture to only show on part of the sphere
+  
+  // Configure texture for proper spherical mapping
   texture.colorSpace = THREE.SRGBColorSpace;
-  texture.repeat.set(0.5, 0.5); // Only use 1/4 of the texture
-  texture.offset.set(0.25, 0.25); // Center the logo
   texture.wrapS = THREE.ClampToEdgeWrapping;
   texture.wrapT = THREE.ClampToEdgeWrapping;
+  texture.minFilter = THREE.LinearFilter; // Better quality for logos
+  texture.magFilter = THREE.LinearFilter;
+  
   return texture;
 });
 
-// Use a high-quality sphere geometry for better texture mapping
-const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
+// Create custom hemisphere geometries for front and back logo placement
+const sphereSegments = 32;
+const frontHemisphereGeometry = new THREE.SphereGeometry(
+  1,                   // radius
+  sphereSegments,      // widthSegments
+  sphereSegments,      // heightSegments
+  0,                   // phiStart
+  Math.PI,             // phiLength (half a sphere - front hemisphere)
+  0,                   // thetaStart
+  Math.PI              // thetaLength (full vertical sweep)
+);
+
+const backHemisphereGeometry = new THREE.SphereGeometry(
+  1,                   // radius
+  sphereSegments,      // widthSegments
+  sphereSegments,      // heightSegments
+  Math.PI,             // phiStart (start from the back)
+  Math.PI,             // phiLength (half a sphere - back hemisphere)
+  0,                   // thetaStart
+  Math.PI              // thetaLength (full vertical sweep)
+);
 
 // Create spheres with better spacing
 const spheres = [...Array(15)].map(() => ({
@@ -100,8 +121,7 @@ function SphereGeo({
     api.current?.applyImpulse(impulse, true);
   });
 
-  // Reduce logo plane size to fit within sphere boundary (70% of sphere diameter)
-  const logoPlaneSize = scale * 1.4; // 70% of sphere diameter (scale * 2)
+  // No logo plane size needed anymore as we're mapping directly to the sphere
 
   return (
     <RigidBody
@@ -118,38 +138,41 @@ function SphereGeo({
         position={[0, 0, 1.2 * scale]}
         args={[0.15 * scale, 0.275 * scale]}
       />
-      <group>
-        {/* White Sphere */}
+      {/* Group to hold both hemispheres */}
+      <group rotation={[0.3, 1, 1]}>
+        {/* Front hemisphere with logo */}
         <mesh
           castShadow
           receiveShadow
           scale={scale}
-          geometry={sphereGeometry}
-          material={new THREE.MeshStandardMaterial({ color: "white", roughness: 0.3, metalness: 0.2 })}
-          rotation={[0.3, 1, 1]}
-        />
-
-        {/* Logo Plane 1 (Front) - positioned on the surface of the sphere */}
-        <mesh position={[0, 0, scale * 0.99]} rotation={[0, 0, 0]}>
-          <planeGeometry args={[logoPlaneSize, logoPlaneSize]} />
-          <meshBasicMaterial 
-            map={material.map} 
-            side={THREE.DoubleSide} 
-            transparent={true} 
-            alphaTest={0.5}
-            depthWrite={false} // Prevent z-fighting with sphere
+          geometry={frontHemisphereGeometry}
+        >
+          <meshStandardMaterial 
+            color="white"
+            roughness={0.3} 
+            metalness={0.2}
+            map={material.map}
+            transparent={true}
+            alphaTest={0.1}
+            side={THREE.FrontSide}
           />
         </mesh>
-
-        {/* Logo Plane 2 (Back) - positioned on the opposite side */}
-        <mesh position={[0, 0, -scale * 0.99]} rotation={[0, Math.PI, 0]}>
-          <planeGeometry args={[logoPlaneSize, logoPlaneSize]} />
-          <meshBasicMaterial 
-            map={material.map} 
-            side={THREE.DoubleSide} 
-            transparent={true} 
-            alphaTest={0.5}
-            depthWrite={false} // Prevent z-fighting with sphere
+        
+        {/* Back hemisphere with the same logo */}
+        <mesh
+          castShadow
+          receiveShadow
+          scale={scale}
+          geometry={backHemisphereGeometry}
+        >
+          <meshStandardMaterial 
+            color="white"
+            roughness={0.3} 
+            metalness={0.2}
+            map={material.map}
+            transparent={true}
+            alphaTest={0.1}
+            side={THREE.FrontSide}
           />
         </mesh>
       </group>
