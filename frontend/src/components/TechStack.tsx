@@ -49,7 +49,12 @@ const textures = imageUrls.map((url) => {
       console.error(`Error loading texture ${url}:`, error);
     }
   );
+  // Configure texture to only show on part of the sphere
   texture.colorSpace = THREE.SRGBColorSpace;
+  texture.repeat.set(0.5, 0.5); // Only use 1/4 of the texture
+  texture.offset.set(0.25, 0.25); // Center the logo
+  texture.wrapS = THREE.ClampToEdgeWrapping;
+  texture.wrapT = THREE.ClampToEdgeWrapping;
   return texture;
 });
 
@@ -200,19 +205,23 @@ const TechStack = () => {
   }, []);
   const materials = useMemo(() => {
     return textures.map(
-      (texture) =>
-        new THREE.MeshPhysicalMaterial({
+      (texture) => {
+        // Create a background material for the sphere
+        const material = new THREE.MeshPhysicalMaterial({
           map: texture,
           emissive: "#ffffff",
           emissiveMap: texture,
           emissiveIntensity: 0.3,
           metalness: 0.5,
-          roughness: 1,
-          clearcoat: 0.1,
+          roughness: 0.7, // Reduced roughness for better logo visibility
+          clearcoat: 0.3, // Increased clearcoat for better shine
           transparent: true,
           opacity: 1.0,
-          side: THREE.DoubleSide, // Render both sides
-        })
+          side: THREE.FrontSide,
+        });
+        
+        return material;
+      }
     );
   }, []);
 

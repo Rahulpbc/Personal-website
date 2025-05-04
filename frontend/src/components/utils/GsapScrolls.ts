@@ -151,13 +151,31 @@ export function setCharTimeline(
           end: "bottom top",
         },
       });
-      tM2.to(".what-box-in", { display: "flex", duration: 0.1, delay: 0 }, 0);
+      // Check if element exists before animating
+      if (document.querySelector(".what-box-in")) {
+        tM2.to(".what-box-in", { display: "flex", duration: 0.1, delay: 0 }, 0);
+      } else {
+        console.log("Element .what-box-in not found, skipping animation");
+      }
     }
   }
 }
 
 // Export the timeline setup function
 export function setAllTimeline() {
+  // Ensure DOM is ready before setting up animations
+  if (typeof document === 'undefined') return;
+  
+  // Helper function to check if elements exist before animating
+  const safeAnimate = (selector: string, from: any, to: any, position: number, timeline: gsap.core.Timeline) => {
+    const elements = document.querySelectorAll(selector);
+    if (elements && elements.length > 0) {
+      return timeline.fromTo(selector, from, to, position);
+    } else {
+      console.log(`Elements ${selector} not found, skipping animation`);
+      return timeline;
+    }
+  };
   const careerTimeline = gsap.timeline({
     scrollTrigger: {
       trigger: ".career-section",
@@ -167,27 +185,34 @@ export function setAllTimeline() {
       invalidateOnRefresh: true,
     },
   });
-  careerTimeline
-    .fromTo(
-      ".career-timeline",
-      { maxHeight: "10%" },
-      { maxHeight: "100%", duration: 0.5 },
-      0
-    )
+  // Use safe animation approach
+  if (document.querySelector(".career-timeline")) {
+    careerTimeline
+      .fromTo(
+        ".career-timeline",
+        { maxHeight: "10%" },
+        { maxHeight: "100%", duration: 0.5 },
+        0
+      )
+      .fromTo(
+        ".career-timeline",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.1 },
+        0
+      );
+  }
 
-    .fromTo(
-      ".career-timeline",
-      { opacity: 0 },
-      { opacity: 1, duration: 0.1 },
-      0
-    )
-    .fromTo(
+  if (document.querySelector(".career-info-box")) {
+    careerTimeline.fromTo(
       ".career-info-box",
       { opacity: 0 },
       { opacity: 1, stagger: 0.1, duration: 0.5 },
       0
-    )
-    .fromTo(
+    );
+  }
+
+  if (document.querySelector(".career-dot")) {
+    careerTimeline.fromTo(
       ".career-dot",
       { animationIterationCount: "infinite" },
       {
@@ -197,6 +222,7 @@ export function setAllTimeline() {
       },
       0
     );
+  }
 
   if (window.innerWidth > 1024) {
     careerTimeline.fromTo(
