@@ -58,13 +58,12 @@ const textures = imageUrls.map((url) => {
   return texture;
 });
 
-// Create a flat card geometry for better logo visibility
-const cardGeometry = new THREE.BoxGeometry(2, 2, 0.2);
-// Keep a reference to the original sphere geometry for collision detection
-const collisionGeometry = new THREE.SphereGeometry(1, 8, 8);
+// Use a high-quality sphere geometry for better texture mapping
+const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
 
-const spheres = [...Array(30)].map(() => ({
-  scale: [0.7, 1, 0.8, 1, 1][Math.floor(Math.random() * 5)],
+// Create spheres with better spacing
+const spheres = [...Array(15)].map(() => ({
+  scale: [0.8, 0.9, 1, 1.1, 1.2][Math.floor(Math.random() * 5)],
 }));
 
 type SphereProps = {
@@ -75,7 +74,7 @@ type SphereProps = {
   isActive: boolean;
 };
 
-function LogoCard({
+function SphereGeo({
   vec = new THREE.Vector3(),
   scale,
   r = THREE.MathUtils.randFloatSpread,
@@ -116,20 +115,14 @@ function LogoCard({
         position={[0, 0, 1.2 * scale]}
         args={[0.15 * scale, 0.275 * scale]}
       />
-      <group rotation={[0, r(Math.PI), 0]}>
-        <mesh
-          castShadow
-          receiveShadow
-          scale={scale}
-          geometry={cardGeometry}
-          material={material}
-          // Apply a slight rotation for better visibility
-          rotation={[0.1, 0, 0]}
-        >
-          {/* Add a subtle glow effect */}
-          <meshBasicMaterial attach="material-back" color="#ffffff" opacity={0.1} transparent={true} />  
-        </mesh>
-      </group>
+      <mesh
+        castShadow
+        receiveShadow
+        scale={scale}
+        geometry={sphereGeometry}
+        material={material}
+        rotation={[0.3, 1, 1]}
+      />
     </RigidBody>
   );
 }
@@ -214,28 +207,24 @@ const TechStack = () => {
   const materials = useMemo(() => {
     return textures.map(
       (texture) => {
-        // Create an optimized material for flat card display
+        // Configure texture to only show on the front hemisphere of the sphere
+        texture.offset.set(0.25, 0.25);
+        texture.repeat.set(0.5, 0.5);
+        texture.center.set(0.5, 0.5);
+        
+        // Create a material optimized for spherical logo display
         const material = new THREE.MeshPhysicalMaterial({
           map: texture,
+          color: '#ffffff',  // White base color
           emissive: "#ffffff",
           emissiveMap: texture,
-          emissiveIntensity: 0.2,
-          metalness: 0.3,
-          roughness: 0.4,
-          clearcoat: 0.5,
-          transparent: true,
-          opacity: 1.0,
-          side: THREE.DoubleSide, // Show logo on both sides
+          emissiveIntensity: 0.3,
+          metalness: 0.4,
+          roughness: 0.6,
+          clearcoat: 0.4,
+          transparent: false,
+          side: THREE.FrontSide,
         });
-        
-        // Add a white border/background to make logos stand out
-        material.onBeforeCompile = (shader) => {
-          shader.fragmentShader = shader.fragmentShader.replace(
-            '#include <dithering_fragment>',
-            '#include <dithering_fragment>\n' +
-            'gl_FragColor.rgb = mix(vec3(1.0, 1.0, 1.0), gl_FragColor.rgb, 0.9);'
-          );
-        };
         
         return material;
       }
@@ -266,7 +255,7 @@ const TechStack = () => {
         <Physics gravity={[0, 0, 0]}>
           <Pointer isActive={isActive} />
           {spheres.map((props, i) => (
-            <LogoCard
+            <SphereGeo
               key={i}
               {...props}
               material={materials[i % materials.length]} // Use sequential logos instead of random
