@@ -19,17 +19,8 @@ const setLighting = (scene: THREE.Scene) => {
   initialPointLight.castShadow = true;
   scene.add(initialPointLight);
 
-  new RGBELoader()
-    .setPath("/models/")
-    .load("char_enviorment.hdr", function (texture) {
-      texture.mapping = THREE.EquirectangularReflectionMapping;
-      scene.environment = texture;
-      scene.environmentIntensity = 0;
-      scene.environmentRotation.set(5.76, 85.85, 1);
-    });
-
-  // Skip HDR loading completely and use standard lighting instead
-  console.log("Using standard lighting setup instead of HDR");
+  // Instead of loading HDR, set up a simple lighting environment
+  // This avoids issues with HDR file formats
   
   // Add ambient light
   const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
@@ -45,14 +36,15 @@ const setLighting = (scene: THREE.Scene) => {
   highlightPointLight.position.set(3, 12, 4);
   scene.add(highlightPointLight);
   
-  // Set a basic environment color
+  // Set scene environment
   scene.background = new THREE.Color(0x303030);
   
-  // Create a basic cube environment map
-  const cubeRenderTarget = new THREE.WebGLCubeRenderTarget(128);
-  const cubeCamera = new THREE.CubeCamera(0.1, 1000, cubeRenderTarget);
-  scene.environment = cubeRenderTarget.texture;
+  // Create a basic cube environment map for reflections
+  const envRenderTarget = new THREE.WebGLCubeRenderTarget(128);
+  const envCamera = new THREE.CubeCamera(0.1, 1000, envRenderTarget);
+  scene.environment = envRenderTarget.texture;
   scene.environmentIntensity = 0.5;
+  scene.environmentRotation.set(5.76, 85.85, 1);
   
   console.log("Standard lighting setup complete");
 
